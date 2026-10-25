@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REMASTER TEC | Equipos Grado A, Accesorios y Laboratorio de Optimización — Bogotá</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Librería PapaParse para conexión en tiempo real con Google Sheets -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <!-- Tipografías Oficiales del Manual de Marca REMASTER TEC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              carbon: '#0B0F17',
+              slate: '#1E293B',
+              emerald: '#10B981',
+              emeraldDark: '#059669',
+              mint: '#34D399',
+              amber: '#F59E0B',
+              surface: '#F8FAFC',
+              ecoBg: '#ECFDF5'
+            }
+          },
+          fontFamily: {
+            display: ['"Space Grotesk"', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #F8FAFC;
+      color: #0F172A;
+    }
+
+    /* Textura Matriz Técnica REMASTER TEC */
+    .bg-tech-grid {
+      background-color: #F8FAFC;
+      background-image: radial-gradient(#CBD5E1 1.1px, transparent 1.1px);
+      background-size: 20px 20px;
+    }
+
+    /* Textura Carbon Mesh con Resplandor Esmeralda */
+    .bg-carbon-glow {
+      background-color: #0B0F17;
+      background-image: 
+        radial-gradient(circle at 88% 20%, rgba(16, 185, 129, 0.18), transparent 42%),
+        radial-gradient(circle at 12% 80%, rgba(52, 211, 153, 0.10), transparent 35%),
+        linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 28px 28px, 28px 28px;
+    }
+
+    /* Tarjetas interactivas */
+    .remaster-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      box-shadow: 0 6px 20px -4px rgba(11, 15, 23, 0.05);
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .remaster-card:hover {
+      transform: translateY(-4px);
+      border-color: #10B981;
+      box-shadow: 0 18px 32px -8px rgba(16, 185, 129, 0.16);
+    }
+
+    /* Animación del Modal Emergente */
+    @keyframes modalPop {
+      0% { opacity: 0; transform: scale(0.95) translateY(10px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .animate-modal {
+      animation: modalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+</head>
+<body class="bg-tech-grid antialiased selection:bg-brand-emerald selection:text-white flex flex-col min-h-screen">
+
+  <!-- BARRA SUPERIOR ULTRA-COMPACTA -->
+  <div class="bg-brand-carbon text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-brand-emerald animate-pulse"></span>
+        <span class="font-mono text-[11px] uppercase tracking-wider text-brand-mint font-bold">BOGOTÁ D.C. • INVENTARIO EN VIVO</span>
+        <span class="hidden md:inline text-slate-500">|</span>
+        <span class="hidden md:inline">Calidad empresarial Grado A superior a equipos nuevos de almacén • Garantía por escrito</span>
+      </div>
+      <div class="flex items-center gap-3 font-mono text-[11px]">
+        <span class="text-emerald-400">🌱 -1.8 kg E-Waste por equipo</span>
+        <span class="hidden sm:inline text-slate-600">|</span>
+        <span class="hidden sm:inline text-slate-300">WhatsApp: +57 302 773 0460</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVBAR PRINCIPAL CON PESTAÑAS DE NAVEGACIÓN -->
+  <nav class="sticky top-0 z-40 bg-brand-carbon/95 backdrop-blur-md border-b border-slate-800 text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+      
+      <!-- Logo Oficial REMASTER TEC -->
+      <a href="#" onclick="switchMainTab('equipos'); return false;" class="flex items-center gap-3 group">
+        <svg class="w-10 h-10 shrink-0 transition-transform group-hover:scale-105" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="64" height="64" rx="14" fill="#1E293B"/>
+          <rect x="2" y="2" width="60" height="60" rx="12" stroke="#10B981" stroke-opacity="0.4" stroke-width="1.5"/>
+          <path d="M24 10V16M32 10V16M40 10V16M24 48V54M32 48V54M40 48V54M10 24H16M10 32H16M10 40H16M48 24H54M48 32H54M48 40H54" stroke="#34D399" stroke-width="2.5" stroke-linecap="round"/>
+          <rect x="16" y="16" width="32" height="32" rx="7" fill="#0B0F17" stroke="#10B981" stroke-width="2.5"/>
+          <path d="M24 40V24H33C36.3137 24 39 26.6863 39 30C39 33.3137 36.3137 36 33 36H24" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M32 36L39 41" stroke="#34D399" stroke-width="3" stroke-linecap="round"/>
+          <path d="M36 22C40.5 22 43 25.5 41 30C38 29.5 35.5 26.5 36 22Z" fill="#10B981"/>
+        </svg>
+        <div>
+          <div class="font-display font-bold text-xl tracking-tight leading-none flex items-center gap-1">
+            <span>REMASTER</span>
+            <span class="text-brand-emerald">TEC</span>
+          </div>
+          <span class="font-mono text-[10px] tracking-widest uppercase text-slate-400 block mt-1">
+            Hardware Grado A & Lab
+          </span>
+        </div>
+      </a>
+
+      <!-- Selector de 3 Pestañas Principales -->
+      <div class="flex flex-wrap items-center bg-slate-900/90 p-1.5 rounded-xl border border-slate-800 gap-1">
+        <button id="nav-equipos" onclick="switchMainTab('equipos')" class="px-4 py-2 rounded-lg text-xs sm:text-sm font-display font-bold transition flex items-center gap-2 bg-brand-emerald text-brand-carbon shadow-sm">
+          <span>💻</span> Equipos Grado A
+        </button>
+        <button id="nav-accesorios" onclick="switchMainTab('accesorios')" class="px-4 py-2 rounded-lg text-xs sm:text-sm font-display font-bold transition flex items-center gap-2 text-slate-300 hover:text-white">
+          <span>🎒</span> Accesorios & Memorias
+        </button>
+        <button id="nav-servicios" onclick="switchMainTab('servicios')" class="px-4 py-2 rounded-lg text-xs sm:text-sm font-display font-bold transition flex items-center gap-2 text-slate-300 hover:text-white">
+          <span>🚀</span> Servicio de Optimización (RAM/SSD)
+        </button>
+      </div>
+
+      <!-- Botón VIP WhatsApp -->
+      <a id="vip-btn" href="#" target="_blank"
+         class="hidden xl:flex bg-slate-800 hover:bg-brand-emerald text-white hover:text-brand-carbon border border-slate-700 font-display font-bold px-4 py-2 rounded-xl text-xs transition items-center gap-2">
+        <span>🔔 Lista VIP de Lotes</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- BANNER HERO COMPACTO -->
+  <header class="bg-carbon-glow text-white border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 py-6">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+        <div class="space-y-1">
+          <div class="inline-flex items-center gap-2 text-brand-mint font-mono text-xs">
+            <span>⚡ POTENCIA EMPRESARIAL SIN SOBREPRECIO</span>
+            <span>•</span>
+            <span>HAZ CLIC EN CUALQUIER PRODUCTO PARA VER SUS FOTOS EN DETALLE</span>
+          </div>
+          <h1 class="font-display text-2xl sm:text-3xl font-bold tracking-tight">
+            Más rápidos y resistentes que un equipo comercial nuevo. <span class="text-brand-emerald">40% más económicos.</span>
+          </h1>
+        </div>
+
+        <div class="flex flex-wrap gap-2 text-xs font-mono">
+          <div class="bg-slate-900/90 border border-slate-700 px-3 py-2 rounded-xl flex items-center gap-1.5">
+            <span class="text-brand-emerald">✓</span> Chasis Militar Grado A
+          </div>
+          <div class="bg-slate-900/90 border border-slate-700 px-3 py-2 rounded-xl flex items-center gap-1.5">
+            <span class="text-brand-emerald">✓</span> SSD NVMe + RAM Auditada
+          </div>
+          <div class="bg-emerald-950/70 border border-emerald-500/40 text-brand-mint px-3 py-2 rounded-xl flex items-center gap-1.5">
+            <span>♻️</span> Tecnología Circular Sostenible
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======================================================================= -->
+  <!-- PESTAÑA 1: EQUIPOS REACONDICIONADOS GRADO A                             -->
+  <!-- ======================================================================= -->
+  <main id="section-equipos" class="max-w-7xl mx-auto px-4 py-7 flex-grow w-full">
+    
+    <!-- Barra de Filtros y Buscador Rápido -->
+    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm">
+      <div class="flex flex-wrap gap-1.5" id="filter-buttons">
+        <button onclick="filterItems('todos', this)" class="filter-btn bg-brand-carbon text-white px-3.5 py-2 rounded-xl text-xs font-display font-bold transition">
+          Todos los Equipos
+        </button>
+        <button onclick="filterItems('portatiles', this)" class="filter-btn bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl text-xs font-display font-bold transition">
+          💻 Portátiles Corporativos
+        </button>
+        <button onclick="filterItems('combos', this)" class="filter-btn bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl text-xs font-display font-bold transition">
+          🖥️ PCs & Combos Oficina
+        </button>
+        <button onclick="filterItems('monitores', this)" class="filter-btn bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl text-xs font-display font-bold transition">
+          🖵 Monitores Pro
+        </button>
+        <button onclick="filterItems('tablets', this)" class="filter-btn bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl text-xs font-display font-bold transition">
+          📱 Tablets Samsung
+        </button>
+      </div>
+
+      <!-- Buscador instantáneo en PC -->
+      <div class="relative w-full lg:w-72">
+        <input id="search-input" type="text" oninput="handleSearch()" placeholder="Buscar referencia, marca o característica..."
+               class="w-full pl-9 pr-4 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-emerald font-sans">
+        <span class="absolute left-3 top-2.5 text-slate-400 text-xs">🔍</span>
+      </div>
+    </div>
+
+    <!-- Indicador de carga -->
+    <div id="loading" class="text-center py-14 font-mono text-slate-500 text-sm">
+      Cargando inventario en tiempo real desde Google Sheets...
+    </div>
+
+    <!-- Grilla Optimizada: 4 Columnas en Pantallas de PC -->
+    <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"></div>
+  </main>
+
+  <!-- ======================================================================= -->
+  <!-- PESTAÑA 2: ACCESORIOS (BASES REFRIGERANTES, USB, MICRO SD)              -->
+  <!-- ======================================================================= -->
+  <section id="section-accesorios" class="hidden max-w-7xl mx-auto px-4 py-7 flex-grow w-full">
+    <div class="bg-brand-carbon text-white rounded-2xl p-6 mb-6 border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div>
+        <span class="font-mono text-xs text-brand-mint uppercase tracking-wider">Complementos Oficiales REMASTER TEC</span>
+        <h2 class="font-display text-2xl font-bold mt-1">Accesorios de Refrigeración, Memorias USB y Micro SD</h2>
+        <p class="text-slate-300 text-xs sm:text-sm mt-1">
+          Inventario sincronizado en tiempo real desde nuestra base de datos. Haz clic en cualquier accesorio para ampliar sus fotos.
+        </p>
+      </div>
+      <div class="flex flex-wrap gap-2 shrink-0">
+        <button onclick="filterAccesorios('todos', this)" class="acc-btn bg-brand-emerald text-brand-carbon px-3.5 py-2 rounded-xl text-xs font-display font-bold transition">Todos</button>
+        <button onclick="filterAccesorios('refrigeracion', this)" class="acc-btn bg-slate-800 text-slate-200 hover:bg-slate-700 px-3.5 py-2 rounded-xl text-xs font-display font-bold transition">❄️ Bases Refrigerantes</button>
+        <button onclick="filterAccesorios('usb', this)" class="acc-btn bg-slate-800 text-slate-200 hover:bg-slate-700 px-3.5 py-2 rounded-xl text-xs font-display font-bold transition">🔌 Memorias USB</button>
+        <button onclick="filterAccesorios('microsd', this)" class="acc-btn bg-slate-800 text-slate-200 hover:bg-slate-700 px-3.5 py-2 rounded-xl text-xs font-display font-bold transition">💾 Tarjetas Micro SD</button>
+      </div>
+    </div>
+
+    <!-- Grilla de Accesorios (4 columnas en PC, cargada 100% desde Google Sheets) -->
+    <div id="accesorios-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"></div>
+  </section>
+
+  <!-- ======================================================================= -->
+  <!-- PESTAÑA 3: LABORATORIO DE OPTIMIZACIÓN (UPGRADE RAM & SSD)              -->
+  <!-- ======================================================================= -->
+  <section id="section-servicios" class="hidden max-w-7xl mx-auto px-4 py-7 flex-grow w-full">
+    
+    <div class="bg-carbon-glow text-white rounded-3xl p-6 sm:p-10 mb-8 border border-slate-800">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-7 space-y-4">
+          <span class="inline-block bg-emerald-950 border border-emerald-500/40 text-brand-mint font-mono text-xs px-3.5 py-1.5 rounded-full">
+            🛠️ REMASTER LAB BOGOTÁ • REPONTENCIACIÓN DE EQUIPOS
+          </span>
+          <h2 class="font-display text-3xl sm:text-4xl font-bold leading-tight">
+            Multiplica la velocidad de tu computador actual con <span class="text-brand-emerald">Disco Sólido SSD y Memoria RAM</span>.
+          </h2>
+          <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+            No necesitas gastar millones en un computador nuevo si el tuyo se volvió lento. Reemplazar el disco mecánico por una unidad de estado sólido (SSD) y ampliar la memoria RAM devuelve la velocidad total a tu equipo y cuida el medio ambiente evitando desechos electrónicos.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+            <div class="bg-slate-900/90 border border-slate-800 p-3.5 rounded-2xl">
+              <div class="font-mono text-brand-emerald text-lg font-bold">Arranque Flash</div>
+              <div class="text-xs text-slate-400">Encendido en segundos con unidades SSD</div>
+            </div>
+            <div class="bg-slate-900/90 border border-slate-800 p-3.5 rounded-2xl">
+              <div class="font-mono text-brand-emerald text-lg font-bold">Multitarea Real</div>
+              <div class="text-xs text-slate-400">Ampliación de RAM DDR3L / DDR4 / DDR5</div>
+            </div>
+            <div class="bg-slate-900/90 border border-slate-800 p-3.5 rounded-2xl">
+              <div class="font-mono text-brand-emerald text-lg font-bold">Datos Seguros</div>
+              <div class="text-xs text-slate-400">Instalación conservando tu información</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Simulador / Solicitud de Cotización de Repotenciación -->
+        <div class="lg:col-span-5 bg-slate-900/95 border border-emerald-500/40 rounded-2xl p-6 shadow-2xl">
+          <div class="font-mono text-xs text-brand-mint uppercase font-bold mb-1">⚡ Configurador de Optimización</div>
+          <h3 class="font-display text-xl font-bold text-white mb-4">Selecciona las mejoras para tu equipo</h3>
+
+          <div class="space-y-4 text-xs sm:text-sm">
+            <div>
+              <label class="block text-slate-300 font-semibold mb-1.5">1. Tipo de equipo:</label>
+              <select id="upg-device" onchange="updateUpgradeQuote()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white font-sans focus:border-brand-emerald focus:outline-none">
+                <option value="Computador Portátil">💻 Computador Portátil</option>
+                <option value="PC de Escritorio / Todo en Uno">🖥️ PC de Escritorio o Todo en Uno (AIO)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-slate-300 font-semibold mb-1.5">2. Disco de Estado Sólido (SSD):</label>
+              <select id="upg-ssd" onchange="updateUpgradeQuote()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white font-sans focus:border-brand-emerald focus:outline-none">
+                <option value="Sin cambio de disco">Sin cambio de disco</option>
+                <option value="Instalar SSD 256GB" selected>🚀 Instalar Disco Sólido SSD 256GB</option>
+                <option value="Instalar SSD 512GB">🔥 Instalar Disco Sólido SSD 512GB</option>
+                <option value="Instalar SSD 1TB">💎 Instalar Disco Sólido SSD 1TB</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-slate-300 font-semibold mb-1.5">3. Ampliación de Memoria RAM:</label>
+              <select id="upg-ram" onchange="updateUpgradeQuote()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white font-sans focus:border-brand-emerald focus:outline-none">
+                <option value="Sin ampliación de RAM">Sin ampliación de RAM</option>
+                <option value="Ampliar +8GB Memoria RAM" selected>⚡ Agregar +8GB de Memoria RAM</option>
+                <option value="Ampliar +16GB Memoria RAM">🔥 Agregar +16GB de Memoria RAM</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-slate-300 font-semibold mb-1.5">4. Mantenimiento Preventivo:</label>
+              <select id="upg-maint" onchange="updateUpgradeQuote()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white font-sans focus:border-brand-emerald focus:outline-none">
+                <option value="Diagnóstico general">Diagnóstico de compatibilidad</option>
+                <option value="Limpieza interna + Cambio de pasta térmica">❄️ Incluir limpieza interna + Pasta térmica</option>
+              </select>
+            </div>
+
+            <a id="upg-wa-btn" href="#" target="_blank"
+               class="block w-full bg-brand-emerald hover:bg-brand-emeraldDark text-brand-carbon font-display font-bold py-3.5 rounded-xl text-center text-sm transition shadow-lg mt-2">
+              💬 Cotizar Esta Optimización por WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tarjetas de Servicios de Optimización -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="remaster-card rounded-2xl p-6 flex flex-col justify-between">
+        <div>
+          <span class="bg-emerald-100 text-emerald-900 font-mono text-xs font-bold px-3 py-1 rounded-full">UPGRADE ALMACENAMIENTO</span>
+          <h4 class="font-display text-xl font-bold text-brand-carbon mt-3">Instalación de Disco Duro de Estado Sólido (SSD)</h4>
+          <p class="text-xs text-slate-600 mt-2">
+            Reemplazamos tu disco duro tradicional lento por tecnología de estado sólido SATA o NVMe M.2 de alta velocidad.
+          </p>
+          <ul class="mt-4 space-y-2 text-xs text-slate-600 border-t border-slate-100 pt-3">
+            <li>✓ Encendido del sistema en pocos segundos</li>
+            <li>✓ Apertura instantánea de programas de oficina y estudio</li>
+            <li>✓ Mayor resistencia a golpes y menor consumo de batería</li>
+          </ul>
+        </div>
+        <a href="#" onclick="sendServiceWA('Instalación de Disco de Estado Sólido (SSD)'); return false;"
+           class="mt-6 block w-full bg-brand-carbon hover:bg-brand-emerald text-white hover:text-brand-carbon font-display font-bold py-3 rounded-xl text-xs text-center transition">
+          💬 Consultar para mi equipo en WhatsApp
+        </a>
+      </div>
+
+      <div class="remaster-card rounded-2xl p-6 flex flex-col justify-between">
+        <div>
+          <span class="bg-emerald-100 text-emerald-900 font-mono text-xs font-bold px-3 py-1 rounded-full">UPGRADE MULTITAREA</span>
+          <h4 class="font-display text-xl font-bold text-brand-carbon mt-3">Ampliación de Memoria RAM</h4>
+          <p class="text-xs text-slate-600 mt-2">
+            Aumentamos la capacidad de memoria RAM de tu portátil o PC de escritorio para evitar bloqueos cuando tienes varios programas abiertos.
+          </p>
+          <ul class="mt-4 space-y-2 text-xs text-slate-600 border-t border-slate-100 pt-3">
+            <li>✓ Módulos verificados y compatibles con tu placa base</li>
+            <li>✓ Configuración en Dual-Channel para máximo rendimiento</li>
+            <li>✓ Pruebas de estabilidad incluidas</li>
+          </ul>
+        </div>
+        <a href="#" onclick="sendServiceWA('Ampliación de Memoria RAM'); return false;"
+           class="mt-6 block w-full bg-brand-carbon hover:bg-brand-emerald text-white hover:text-brand-carbon font-display font-bold py-3 rounded-xl text-xs text-center transition">
+          💬 Consultar para mi equipo en WhatsApp
+        </a>
+      </div>
+
+      <div class="remaster-card rounded-2xl p-6 flex flex-col justify-between border-2 border-brand-emerald">
+        <div>
+          <span class="bg-brand-carbon text-brand-mint font-mono text-xs font-bold px-3 py-1 rounded-full">REPOTENCIACIÓN COMPLETA</span>
+          <h4 class="font-display text-xl font-bold text-brand-carbon mt-3">Combo SSD + Memoria RAM + Mantenimiento</h4>
+          <p class="text-xs text-slate-600 mt-2">
+            La renovación total para darle años extra de vida útil a tu computador con el máximo desempeño.
+          </p>
+          <ul class="mt-4 space-y-2 text-xs text-slate-600 border-t border-slate-100 pt-3">
+            <li>✓ Instalación de SSD + Ampliación de Memoria RAM</li>
+            <li>✓ Limpieza interna del sistema de enfriamiento</li>
+            <li>✓ Optimización completa del sistema operativo</li>
+          </ul>
+        </div>
+        <a href="#" onclick="sendServiceWA('Combo Completo SSD + Memoria RAM + Mantenimiento'); return false;"
+           class="mt-6 block w-full bg-brand-emerald hover:bg-brand-emeraldDark text-brand-carbon font-display font-bold py-3 rounded-xl text-xs text-center transition shadow-md">
+          💬 Cotizar Combo Completo por WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================= -->
+  <!-- MODAL EMERGENTE INTERACTIVO DE GALERÍA DE FOTOS Y DETALLE DE PRODUCTO   -->
+  <!-- ======================================================================= -->
+  <div id="product-modal" class="fixed inset-0 z-50 hidden bg-brand-carbon/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto" onclick="closeModalOnBackdrop(event)">
+    <div class="bg-white border border-slate-200 rounded-3xl max-w-4xl w-full overflow-hidden shadow-2xl animate-modal my-auto" onclick="event.stopPropagation()">
+      
+      <!-- Barra Superior del Modal -->
+      <div class="bg-brand-carbon text-white px-5 py-3.5 flex items-center justify-between border-b border-slate-800">
+        <div class="flex items-center gap-2.5">
+          <span id="modal-badge" class="bg-brand-emerald text-brand-carbon font-mono text-[11px] font-bold px-2.5 py-0.5 rounded-full uppercase">Disponible</span>
+          <span id="modal-ref" class="font-mono text-xs text-slate-400">REF</span>
+        </div>
+        <button onclick="closeProductModal()" class="text-slate-400 hover:text-white bg-slate-800 hover:bg-rose-600 w-8 h-8 rounded-full flex items-center justify-center font-bold transition" title="Cerrar (Esc)">
+          ✕
+        </button>
+      </div>
+
+      <!-- Cuerpo del Modal -->
+      <div class="grid grid-cols-1 md:grid-cols-12">
+        
+        <!-- Columna de Fotos Reales -->
+        <div class="md:col-span-7 bg-slate-950 p-4 sm:p-6 flex flex-col justify-between relative">
+          <div class="relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 h-72 sm:h-96 flex items-center justify-center group">
+            <img id="modal-main-img" src="" alt="Foto del producto" class="w-full h-full object-contain bg-slate-950 transition duration-500 group-hover:scale-105">
+            
+            <button id="modal-prev-btn" onclick="changeModalPhoto(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-brand-carbon/80 hover:bg-brand-emerald text-white hover:text-brand-carbon w-9 h-9 rounded-full flex items-center justify-center font-bold transition shadow-lg">
+              ❮
+            </button>
+            <button id="modal-next-btn" onclick="changeModalPhoto(1)" class="absolute right-3 top-1/2 -translate-y-1/2 bg-brand-carbon/80 hover:bg-brand-emerald text-white hover:text-brand-carbon w-9 h-9 rounded-full flex items-center justify-center font-bold transition shadow-lg">
+              ❯
+            </button>
+
+            <div id="modal-photo-counter" class="absolute bottom-3 left-3 bg-brand-carbon/85 text-brand-mint font-mono text-[11px] px-2.5 py-1 rounded-lg border border-slate-700">
+              Foto 1 / 1
+            </div>
+          </div>
+
+          <!-- Tira de Miniaturas Reales -->
+          <div id="modal-thumbs" class="flex items-center gap-2.5 mt-4 overflow-x-auto pb-1"></div>
+        </div>
+
+        <!-- Columna de Ficha Técnica -->
+        <div class="md:col-span-5 p-6 flex flex-col justify-between bg-white">
+          <div>
+            <div class="inline-flex items-center gap-1.5 text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-lg text-xs font-mono mb-2">
+              <span>✓</span>
+              <span id="modal-grade">Verificado</span>
+            </div>
+
+            <h3 id="modal-title" class="font-display text-xl sm:text-2xl font-bold text-brand-carbon leading-snug"></h3>
+
+            <div class="mt-4 p-3.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-baseline justify-between">
+              <div>
+                <span class="text-[11px] text-slate-500 block">Precio REMASTER TEC:</span>
+                <span id="modal-price" class="font-mono text-2xl sm:text-3xl font-bold text-brand-carbon"></span>
+              </div>
+              <div class="text-right">
+                <span class="text-[11px] text-slate-400 block">Referencia comercial:</span>
+                <span id="modal-old-price" class="font-mono text-sm text-slate-400 line-through"></span>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <h4 class="font-mono text-xs font-bold uppercase text-slate-400 mb-2">Especificaciones & Detalles:</h4>
+              <ul id="modal-specs" class="space-y-2 text-xs sm:text-sm text-slate-700"></ul>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-slate-100 space-y-2">
+            <div class="text-[11px] text-emerald-800 bg-emerald-50/80 px-3 py-1.5 rounded-lg font-medium flex items-center justify-between">
+              <span>🌱 Compra Sostenible</span>
+              <span>Garantía Funcional</span>
+            </div>
+            <a id="modal-wa-btn" href="#" target="_blank"
+               class="block w-full bg-brand-emerald hover:bg-brand-emeraldDark text-brand-carbon font-display font-bold py-3.5 rounded-xl text-sm text-center transition shadow-md">
+              💬 Apartar o Pedir Información por WhatsApp
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER COMPACTO -->
+  <footer class="bg-brand-carbon text-slate-400 border-t border-slate-800 mt-14">
+    <div class="max-w-7xl mx-auto px-4 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+      <div class="flex items-center gap-2">
+        <span class="font-display font-bold text-white">REMASTER <span class="text-brand-emerald">TEC</span></span>
+        <span>— Tecnología Empresarial Grado A, Accesorios & Laboratorio de Optimización.</span>
+      </div>
+      <div class="font-mono text-slate-400">
+        WhatsApp: +57 302 773 0460 • Bogotá, Colombia
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // =========================================================================
+    // CONFIGURACIÓN OFICIAL DE PRODUCCIÓN — REMASTER TEC
+    // =========================================================================
+    const WHATSAPP_NUMBER = "573027730460";
+    const GOOGLE_SHEETS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTIyBLNtltWSTLYcEM1mXe9wHyewkBiL87GXj1g9TH3Kz5CJlTRmhH9UV8NE54bpbUBCRrlf-sPElls/pub?output=csv";
+    // =========================================================================
+
+    document.getElementById('vip-btn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola REMASTER TEC! Quiero unirme a la lista VIP para recibir alertas de nuevos lotes en Bogotá.')}`;
+
+    let inventarioGlobal = [];
+    let filtroActualEquipos = 'todos';
+    let modalPhotos = [];
+    let currentPhotoIdx = 0;
+
+    // Categorías que pertenecen a la pestaña de Accesorios
+    const CATEGORIAS_ACCESORIOS = ['accesorios', 'refrigeracion', 'usb', 'microsd'];
+
+    // Carga exclusivamente los datos reales del archivo de Google Sheets
+    function cargarInventario() {
+      const loadingEl = document.getElementById('loading');
+
+      Papa.parse(GOOGLE_SHEETS_CSV_URL, {
+        download: true,
+        header: true,
+        skipEmptyLines: true,
+        complete: function(results) {
+          inventarioGlobal = (results.data || []).filter(item => item.titulo && item.titulo.trim() !== "");
+          loadingEl.style.display = 'none';
+          renderProducts('todos');
+          renderAccesorios('todos');
+          updateUpgradeQuote();
+        },
+        error: function() {
+          loadingEl.innerText = "No se pudo conectar con la hoja de datos en este momento. Intenta recargar la página.";
+          updateUpgradeQuote();
+        }
+      });
+    }
+
+    // Lee únicamente las fotos reales ingresadas en la celda 'imagen' (separadas por coma si hay varias)
+    function parsePhotos(imagenStr) {
+      return (imagenStr || '')
+        .split(',')
+        .map(u => u.trim())
+        .filter(Boolean);
+    }
+
+    function createCardHTML(p, encodedItem) {
+      const estado = (p.estado_stock || 'disponible').toLowerCase().trim();
+      const esVendido = estado === 'vendido';
+      const badgeStyle = esVendido
+        ? 'bg-slate-200 text-slate-600'
+        : (estado === 'ultimas' ? 'bg-amber-400 text-brand-carbon' : 'bg-brand-emerald text-brand-carbon');
+
+      const fotos = parsePhotos(p.imagen);
+      const tieneFoto = fotos.length > 0;
+      const listaSpecs = (p.specs || '').split('|').map(s => s.trim()).filter(Boolean);
+      const mensajeWA = encodeURIComponent(`Hola REMASTER TEC! Me interesa el *${p.titulo}* (Ref: ${p.id || '-'}) de ${p.precio_remate || ''}. ¿Sigue disponible?`);
+
+      return `
+        <article onclick="openProductModal('${encodedItem}')" class="remaster-card rounded-2xl overflow-hidden flex flex-col justify-between cursor-pointer group ${esVendido ? 'opacity-60 grayscale-[35%]' : ''}">
+          <div>
+            <div class="relative h-48 bg-slate-900 overflow-hidden flex items-center justify-center">
+              ${tieneFoto
+                ? `<img src="${fotos[0]}" alt="${p.titulo}" class="w-full h-full object-cover transition duration-500 group-hover:scale-105">`
+                : `<div class="text-center p-4 font-mono text-xs text-slate-400">REMASTER TEC<br><span class="text-[10px] text-slate-500">Sin imagen asignada</span></div>`
+              }
+              <span class="absolute top-2.5 left-2.5 ${badgeStyle} font-mono text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase shadow-sm">
+                ${p.stock_texto || 'Disponible'}
+              </span>
+              ${fotos.length > 1
+                ? `<span class="absolute top-2.5 right-2.5 bg-brand-carbon/85 text-white font-mono text-[10px] px-2 py-0.5 rounded-lg">
+                     📷 ${fotos.length} fotos
+                   </span>`
+                : ''
+              }
+              <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-carbon/90 via-brand-carbon/40 to-transparent p-2.5 flex items-center justify-between">
+                <span class="font-mono text-[10px] text-brand-mint">✓ ${p.grado_estetico || 'Verificado'}</span>
+                <span class="font-mono text-[10px] text-white bg-brand-emerald/20 border border-brand-emerald/40 px-2 py-0.5 rounded group-hover:bg-brand-emerald group-hover:text-brand-carbon transition font-bold">
+                  🔍 Ampliar
+                </span>
+              </div>
+            </div>
+
+            <div class="p-4">
+              <div class="flex items-center justify-between text-[11px] font-mono text-slate-400 mb-1">
+                <span>REF: ${p.id || '-'}</span>
+                <span class="text-emerald-700 font-semibold">🌱 Eco-Tech</span>
+              </div>
+
+              <h3 class="font-display text-base font-bold text-brand-carbon leading-snug line-clamp-2 group-hover:text-brand-emeraldDark transition">
+                ${p.titulo}
+              </h3>
+
+              <div class="mt-2.5 flex items-baseline gap-2">
+                <span class="font-mono text-xl font-bold text-brand-carbon">${p.precio_remate || ''}</span>
+                ${p.precio_referencia ? `<span class="font-mono text-xs text-slate-400 line-through">${p.precio_referencia}</span>` : ''}
+              </div>
+
+              ${listaSpecs.length > 0 ? `
+                <ul class="mt-3 space-y-1 text-xs text-slate-600 border-t border-slate-100 pt-2.5">
+                  ${listaSpecs.slice(0, 3).map(s => `
+                    <li class="flex items-start gap-1.5 line-clamp-1">
+                      <span class="text-brand-emerald font-bold">▸</span>
+                      <span>${s}</span>
+                    </li>
+                  `).join('')}
+                </ul>
+              ` : ''}
+            </div>
+          </div>
+
+          <div class="px-4 pb-4 pt-1 flex gap-2" onclick="event.stopPropagation()">
+            <button onclick="openProductModal('${encodedItem}')" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-brand-carbon font-display font-bold py-2.5 rounded-xl text-xs transition">
+              📷 Detalle
+            </button>
+            ${esVendido
+              ? `<button disabled class="w-2/3 bg-slate-200 text-slate-500 font-display font-bold py-2.5 rounded-xl text-xs cursor-not-allowed">
+                   Agotado
+                 </button>`
+              : `<a href="https://wa.me/${WHATSAPP_NUMBER}?text=${mensajeWA}" target="_blank"
+                    class="w-2/3 bg-brand-carbon hover:bg-brand-emerald text-white hover:text-brand-carbon font-display font-bold py-2.5 rounded-xl text-xs text-center transition">
+                   💬 WhatsApp
+                 </a>`
+            }
+          </div>
+        </article>
+      `;
+    }
+
+    // Renderiza pestaña de Equipos
+    function renderProducts(filtro = 'todos', searchQuery = '') {
+      filtroActualEquipos = filtro;
+      const grid = document.getElementById('product-grid');
+      grid.innerHTML = '';
+
+      let lista = inventarioGlobal.filter(p => {
+        const cat = (p.categoria || '').toLowerCase().trim();
+        return !CATEGORIAS_ACCESORIOS.includes(cat);
+      });
+
+      if (filtro !== 'todos') {
+        lista = lista.filter(p => (p.categoria || '').toLowerCase().trim() === filtro);
+      }
+
+      if (searchQuery.trim() !== '') {
+        const q = searchQuery.toLowerCase();
+        lista = lista.filter(p =>
+          (p.titulo || '').toLowerCase().includes(q) ||
+          (p.specs || '').toLowerCase().includes(q) ||
+          (p.id || '').toLowerCase().includes(q)
+        );
+      }
+
+      if (lista.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full bg-white rounded-2xl border border-slate-200 p-10 text-center text-slate-500 text-sm">
+            Actualmente no hay equipos cargados en esta categoría en la hoja de datos, o estamos actualizando el nuevo lote. Escríbenos por WhatsApp al +57 302 773 0460.
+          </div>`;
+        return;
+      }
+
+      lista.forEach(p => {
+        const encoded = encodeURIComponent(JSON.stringify(p));
+        grid.innerHTML += createCardHTML(p, encoded);
+      });
+    }
+
+    function handleSearch() {
+      const q = document.getElementById('search-input').value;
+      renderProducts(filtroActualEquipos, q);
+    }
+
+    function filterItems(categoria, btnElement) {
+      document.getElementById('search-input').value = '';
+      renderProducts(categoria);
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.className = "filter-btn bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl text-xs font-display font-bold transition";
+      });
+      if (btnElement) {
+        btnElement.className = "filter-btn bg-brand-carbon text-white px-3.5 py-2 rounded-xl text-xs font-display font-bold transition";
+      }
+    }
+
+    // Renderiza pestaña de Accesorios exclusivamente desde Google Sheets
+    function renderAccesorios(subfiltro = 'todos') {
+      const grid = document.getElementById('accesorios-grid');
+      grid.innerHTML = '';
+
+      const todosAcc = inventarioGlobal.filter(p => {
+        const cat = (p.categoria || '').toLowerCase().trim();
+        return CATEGORIAS_ACCESORIOS.includes(cat);
+      });
+
+      const filtrados = subfiltro === 'todos'
+        ? todosAcc
+        : todosAcc.filter(a => {
+            const cat = (a.categoria || '').toLowerCase().trim();
+            const tit = (a.titulo || '').toLowerCase();
+            return cat === subfiltro || tit.includes(subfiltro);
+          });
+
+      if (filtrados.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full bg-white rounded-2xl border border-slate-200 p-10 text-center text-slate-500 text-sm">
+            Todavía no hay accesorios cargados en esta categoría dentro de tu hoja de Google Sheets. (Para agregarlos, añade una fila en tu Google Sheets con la categoría: <strong>refrigeracion</strong>, <strong>usb</strong> o <strong>microsd</strong>).
+          </div>`;
+        return;
+      }
+
+      filtrados.forEach(item => {
+        const encoded = encodeURIComponent(JSON.stringify(item));
+        grid.innerHTML += createCardHTML(item, encoded);
+      });
+    }
+
+    function filterAccesorios(sub, btnEl) {
+      renderAccesorios(sub);
+      document.querySelectorAll('.acc-btn').forEach(btn => {
+        btn.className = "acc-btn bg-slate-800 text-slate-200 hover:bg-slate-700 px-3.5 py-2 rounded-xl text-xs font-display font-bold transition";
+      });
+      if (btnEl) {
+        btnEl.className = "acc-btn bg-brand-emerald text-brand-carbon px-3.5 py-2 rounded-xl text-xs font-display font-bold transition";
+      }
+    }
+
+    function switchMainTab(tab) {
+      const secEquipos = document.getElementById('section-equipos');
+      const secAccesorios = document.getElementById('section-accesorios');
+      const secServicios = document.getElementById('section-servicios');
+
+      const navEquipos = document.getElementById('nav-equipos');
+      const navAccesorios = document.getElementById('nav-accesorios');
+      const navServicios = document.getElementById('nav-servicios');
+
+      const inactiveClass = "px-4 py-2 rounded-lg text-xs sm:text-sm font-display font-bold transition flex items-center gap-2 text-slate-300 hover:text-white";
+      const activeClass = "px-4 py-2 rounded-lg text-xs sm:text-sm font-display font-bold transition flex items-center gap-2 bg-brand-emerald text-brand-carbon shadow-sm";
+
+      secEquipos.classList.add('hidden');
+      secAccesorios.classList.add('hidden');
+      secServicios.classList.add('hidden');
+
+      navEquipos.className = inactiveClass;
+      navAccesorios.className = inactiveClass;
+      navServicios.className = inactiveClass;
+
+      if (tab === 'accesorios') {
+        secAccesorios.classList.remove('hidden');
+        navAccesorios.className = activeClass;
+      } else if (tab === 'servicios') {
+        secServicios.classList.remove('hidden');
+        navServicios.className = activeClass;
+      } else {
+        secEquipos.classList.remove('hidden');
+        navEquipos.className = activeClass;
+      }
+    }
+
+    // Visor Emergente de Fotos Reales
+    function openProductModal(encodedItem) {
+      const p = JSON.parse(decodeURIComponent(encodedItem));
+      modalPhotos = parsePhotos(p.imagen);
+      currentPhotoIdx = 0;
+
+      document.getElementById('modal-title').innerText = p.titulo || '';
+      document.getElementById('modal-ref').innerText = `REF: ${p.id || '-'}`;
+      document.getElementById('modal-badge').innerText = p.stock_texto || 'Disponible';
+      document.getElementById('modal-grade').innerText = p.grado_estetico || 'Verificado';
+      document.getElementById('modal-price').innerText = p.precio_remate || '';
+      document.getElementById('modal-old-price').innerText = p.precio_referencia || '';
+
+      const specsList = (p.specs || '').split('|').map(s => s.trim()).filter(Boolean);
+      document.getElementById('modal-specs').innerHTML = specsList.map(s => `
+        <li class="flex items-start gap-2">
+          <span class="text-brand-emerald font-bold">✓</span>
+          <span>${s}</span>
+        </li>
+      `).join('');
+
+      const msg = encodeURIComponent(`Hola REMASTER TEC! Vi en el catálogo el *${p.titulo}* (Ref: ${p.id || '-'}) en ${p.precio_remate || ''}. Quiero apartarlo o recibir más información.`);
+      document.getElementById('modal-wa-btn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
+
+      updateModalGalleryView();
+      document.getElementById('product-modal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function updateModalGalleryView() {
+      const mainImg = document.getElementById('modal-main-img');
+      const counter = document.getElementById('modal-photo-counter');
+      const thumbsContainer = document.getElementById('modal-thumbs');
+      const prevBtn = document.getElementById('modal-prev-btn');
+      const nextBtn = document.getElementById('modal-next-btn');
+
+      if (modalPhotos.length === 0) {
+        mainImg.src = '';
+        mainImg.alt = 'Sin imagen disponible';
+        counter.innerText = 'Sin fotos';
+        thumbsContainer.innerHTML = '';
+        prevBtn.classList.add('hidden');
+        nextBtn.classList.add('hidden');
+        return;
+      }
+
+      mainImg.src = modalPhotos[currentPhotoIdx];
+      counter.innerText = `Foto ${currentPhotoIdx + 1} / ${modalPhotos.length}`;
+
+      if (modalPhotos.length > 1) {
+        prevBtn.classList.remove('hidden');
+        nextBtn.classList.remove('hidden');
+        thumbsContainer.innerHTML = modalPhotos.map((url, idx) => `
+          <button onclick="selectModalPhoto(${idx})" class="relative w-16 h-14 rounded-xl overflow-hidden border-2 transition shrink-0 ${idx === currentPhotoIdx ? 'border-brand-emerald scale-105' : 'border-slate-700 opacity-60 hover:opacity-100'}">
+            <img src="${url}" class="w-full h-full object-cover" alt="Miniatura ${idx + 1}">
+          </button>
+        `).join('');
+      } else {
+        prevBtn.classList.add('hidden');
+        nextBtn.classList.add('hidden');
+        thumbsContainer.innerHTML = '';
+      }
+    }
+
+    function changeModalPhoto(delta) {
+      if (modalPhotos.length <= 1) return;
+      currentPhotoIdx = (currentPhotoIdx + delta + modalPhotos.length) % modalPhotos.length;
+      updateModalGalleryView();
+    }
+
+    function selectModalPhoto(index) {
+      currentPhotoIdx = index;
+      updateModalGalleryView();
+    }
+
+    function closeProductModal() {
+      document.getElementById('product-modal').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+
+    function closeModalOnBackdrop(e) {
+      if (e.target.id === 'product-modal') closeProductModal();
+    }
+
+    document.addEventListener('keydown', (e) => {
+      const modal = document.getElementById('product-modal');
+      if (modal.classList.contains('hidden')) return;
+      if (e.key === 'Escape') closeProductModal();
+      if (e.key === 'ArrowRight') changeModalPhoto(1);
+      if (e.key === 'ArrowLeft') changeModalPhoto(-1);
+    });
+
+    function updateUpgradeQuote() {
+      const device = document.getElementById('upg-device').value;
+      const ssd = document.getElementById('upg-ssd').value;
+      const ram = document.getElementById('upg-ram').value;
+      const maint = document.getElementById('upg-maint').value;
+
+      const msg = encodeURIComponent(
+        `Hola REMASTER TEC! Quiero cotizar la optimización de mi *${device}* en Bogotá:\n` +
+        `• Disco Sólido: ${ssd}\n` +
+        `• Memoria RAM: ${ram}\n` +
+        `• Mantenimiento: ${maint}\n` +
+        `¿Me indican precio y disponibilidad para agendar?`
+      );
+      document.getElementById('upg-wa-btn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
+    }
+
+    function sendServiceWA(nombrePlan) {
+      const msg = encodeURIComponent(`Hola REMASTER TEC! Me interesa el servicio de *${nombrePlan}* para repotenciar mi computador. ¿Me ayudan con la cotización?`);
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
+    }
+
+    cargarInventario();
+  </script>
+</body>
+</html>
