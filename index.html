@@ -1,46 +1,60 @@
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
 <head>
+  <!-- ===================================================================== -->
+  <!-- BLOQUE 1: CONFIGURACIÓN BÁSICA Y LIBRERÍAS EXTERNAS                   -->
+  <!-- Qué hace: Define el título de la pestaña y carga Tailwind CSS         -->
+  <!-- (estilos visuales) y PapaParse (lector en vivo de Google Sheets).     -->
+  <!-- ===================================================================== -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>REMASTER TEC | Equipos Grado A, Accesorios y Laboratorio de Optimización — Bogotá</title>
+  <title>REMASTER TEC | Equipos Grado A, Gaming, Accesorios y Laboratorio — Bogotá</title>
+  
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Librería PapaParse para conexión en tiempo real con Google Sheets -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-  <!-- Tipografías Oficiales + Tipografía Cursiva para el "EC" del Logo -->
+  
+  <!-- Tipografías Oficiales del Manual de Marca v2.0 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,700;1,800;1,900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
 
+  <!-- ===================================================================== -->
+  <!-- BLOQUE 2: PALETA DE COLORES Y TIPOGRAFÍAS (MANUAL DE MARCA v2.0)      -->
+  <!-- Cómo modificar: Cambia cualquier código HEX (#) si deseas ajustar     -->
+  <!-- algún color en el futuro.                                             -->
+  <!-- ===================================================================== -->
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
             brand: {
-              carbon: '#0B0F17',
-              slate: '#1E293B',
-              metal: '#64748B',
-              metalLight: '#94A3B8',
-              emerald: '#10B981',
-              emeraldDark: '#059669',
-              mint: '#34D399',
-              ruby: '#E11D48',
-              rubyDark: '#BE123C',
-              surface: '#F4F5F7'
+              carbon: '#0B0F17',      /* Negro fibra de carbono principal */
+              slate: '#1E293B',       /* Gris titanio oscuro */
+              metal: '#64748B',       /* Gris acero medio */
+              metalLight: '#CBD5E1',  /* Plata metálico para REMASTER */
+              emerald: '#10B981',     /* Verde esmeralda principal (Letras TE y botones) */
+              emeraldDark: '#059669', /* Verde esmeralda oscuro */
+              mint: '#34D399',        /* Verde menta brillante */
+              ruby: '#E11D48',        /* Rojo rubí intenso (Letra C y alertas) */
+              rubyDark: '#BE123C',    /* Rojo rubí oscuro */
+              surface: '#F4F5F7'      /* Gris técnico claro del fondo */
             }
           },
           fontFamily: {
             display: ['"Space Grotesk"', 'sans-serif'],
             sans: ['"Plus Jakarta Sans"', 'sans-serif'],
             mono: ['"JetBrains Mono"', 'monospace'],
-            ecItalic: ['"Playfair Display"', 'Georgia', 'serif']
+            tecBrush: ['"Caveat Brush"', 'cursive']
           }
         }
       }
     }
   </script>
 
+  <!-- ===================================================================== -->
+  <!-- BLOQUE 3: ESTILOS VISUALES, TEXTURAS Y ANIMACIONES                    -->
+  <!-- ===================================================================== -->
   <style>
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -48,7 +62,7 @@
       color: #0F172A;
     }
 
-    /* Fondo Técnico Estilo Framework (Cuadrícula de Ingeniería Sutil) */
+    /* Cuadrícula técnica del fondo (Estilo Framework) */
     .bg-framework-grid {
       background-color: #F4F5F7;
       background-image: 
@@ -57,16 +71,17 @@
       background-size: 32px 32px;
     }
 
-    /* Fondo Carbon Metálico con Acentos Esmeralda y Rubí */
+    /* Textura oscura de Fibra de Carbono con resplandor Esmeralda y Rubí */
     .bg-carbon-glow {
       background-color: #0B0F17;
       background-image: 
         radial-gradient(circle at 88% 18%, rgba(16, 185, 129, 0.20), transparent 42%),
-        radial-gradient(circle at 12% 85%, rgba(225, 29, 72, 0.12), transparent 38%),
-        linear-gradient(135deg, #0B0F17 0%, #1E293B 100%);
+        radial-gradient(circle at 12% 85%, rgba(225, 29, 72, 0.14), transparent 38%),
+        radial-gradient(#1E293B 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 8px 8px;
     }
 
-    /* Tarjeta Estilo Framework (Shop All Modular) */
+    /* Tarjetas modulares del catálogo */
     .framework-card {
       background: #FFFFFF;
       border: 1.5px solid #CBD5E1;
@@ -94,7 +109,7 @@
       opacity: 1;
     }
 
-    /* Animación del Modal Emergente de Características */
+    /* Animaciones de las ventanas emergentes */
     @keyframes modalSlideUp {
       0% { opacity: 0; transform: scale(0.94) translateY(24px); }
       100% { opacity: 1; transform: scale(1) translateY(0); }
@@ -103,7 +118,6 @@
       animation: modalSlideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    /* Animación Escalonada para cada Característica al Emerger */
     @keyframes specEmerge {
       0% { opacity: 0; transform: translateX(18px); }
       100% { opacity: 1; transform: translateX(0); }
@@ -113,34 +127,58 @@
       animation: specEmerge 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    /* Estilo de las letras "EC" en Cursiva */
-    .ec-emerald {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-style: italic;
-      font-weight: 900;
-      color: #10B981;
-      padding-right: 1px;
+    /* Regla Tipográfica Oficial: REMASTER Metálico + TEC Brush (TE Esmeralda / C Rubí) */
+    .remaster-metal-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 800;
+      background: linear-gradient(180deg, #FFFFFF 0%, #CBD5E1 55%, #94A3B8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 0.03em;
     }
-    .ec-ruby {
-      font-family: 'Playfair Display', Georgia, serif;
+    .tec-brush-te {
+      font-family: 'Caveat Brush', cursive;
+      color: #10B981;
       font-style: italic;
-      font-weight: 900;
+      line-height: 1;
+      text-shadow: 0 2px 10px rgba(16, 185, 129, 0.35);
+    }
+    .tec-brush-c {
+      font-family: 'Caveat Brush', cursive;
       color: #E11D48;
+      font-style: italic;
+      line-height: 1;
+      text-shadow: 0 2px 10px rgba(225, 29, 72, 0.35);
+    }
+
+    /* Brillo sutil para la Reliquia del Easter Egg */
+    @keyframes relicPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.45); }
+      50% { box-shadow: 0 0 18px 4px rgba(245, 158, 11, 0.75); }
+    }
+    .relic-glow {
+      animation: relicPulse 2.4s infinite;
     }
   </style>
 </head>
 <body class="bg-framework-grid antialiased selection:bg-brand-emerald selection:text-white flex flex-col min-h-screen">
 
-  <!-- BARRA TÉCNICA SUPERIOR -->
+  <!-- ===================================================================== -->
+  <!-- BLOQUE 4: BARRA INFORMATIVA SUPERIOR + INDICADOR DE BONO ACTIVO       -->
+  <!-- ===================================================================== -->
   <div class="bg-brand-carbon text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
       <div class="flex items-center gap-2">
         <span class="inline-block w-2 h-2 rounded-full bg-brand-emerald animate-pulse"></span>
         <span class="font-mono text-[11px] uppercase tracking-wider text-brand-mint font-bold">BOGOTÁ D.C. • CATÁLOGO EN VIVO</span>
         <span class="hidden md:inline text-slate-600">|</span>
-        <span class="hidden md:inline">Ingeniería corporativa Grado A • Haz clic en cualquier equipo para desplegar su ficha interactiva</span>
+        <span class="hidden md:inline">Material de alta calidad con alta resistencia • Haz clic en cualquier producto para ver su ficha</span>
       </div>
       <div class="flex items-center gap-3 font-mono text-[11px]">
+        <!-- Etiqueta que aparece automáticamente cuando el usuario desbloquea el Easter Egg -->
+        <span id="top-bonus-pill" class="hidden bg-amber-400 text-brand-carbon font-bold px-2.5 py-0.5 rounded-full">
+          🏆 BONO $30.000 ACTIVO
+        </span>
         <span class="text-emerald-400">♻️ -1.8 kg E-Waste</span>
         <span class="text-slate-600">|</span>
         <span class="text-slate-200">WhatsApp: <strong class="text-brand-mint">+57 302 773 0460</strong></span>
@@ -148,88 +186,105 @@
     </div>
   </div>
 
-  <!-- NAVBAR PRINCIPAL CON NUEVO LOGO HORIZONTAL REMASTER TEC -->
+  <!-- ===================================================================== -->
+  <!-- BLOQUE 5: BARRA DE NAVEGACIÓN PRINCIPAL, LOGO Y 4 PESTAÑAS            -->
+  <!-- NOTA SOBRE EL LOGO: Ya está dibujado en código SVG para que no        -->
+  <!-- dependas de archivos externos. Si decides subir la imagen de tu logo  -->
+  <!-- a GitHub (ej. "logo.png"), solo reemplaza la etiqueta <svg>...</svg>  -->
+  <!-- por: <img src="logo.png" alt="REMASTER TEC" class="h-14 w-auto">      -->
+  <!-- ===================================================================== -->
   <nav class="sticky top-0 z-40 bg-brand-carbon/95 backdrop-blur-md border-b border-slate-800 text-white shadow-xl">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
       
-      <!-- LOGOTIPO OFICIAL HORIZONTAL -->
-      <a href="#" onclick="switchMainTab('equipos'); return false;" class="flex items-center gap-3.5 group">
-        <svg class="w-12 h-12 shrink-0 transition-transform duration-300 group-hover:scale-105" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- LOGOTIPO OFICIAL REMASTER TEC v2.0 -->
+      <a href="#" onclick="switchMainTab('equipos'); return false;" class="flex items-center gap-3 group">
+        <svg class="w-13 h-13 sm:w-14 sm:h-14 shrink-0 transition-transform duration-300 group-hover:scale-105" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <linearGradient id="navLogoBg" x1="0%" y1="100%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#111827"/>
-              <stop offset="45%" stop-color="#334155"/>
-              <stop offset="78%" stop-color="#059669"/>
+            <linearGradient id="shieldMetalGrad" x1="10%" y1="95%" x2="90%" y2="5%">
+              <stop offset="0%" stop-color="#1E293B"/>
+              <stop offset="48%" stop-color="#475569"/>
+              <stop offset="82%" stop-color="#059669"/>
               <stop offset="100%" stop-color="#10B981"/>
             </linearGradient>
-            <linearGradient id="navMetalStroke" x1="0%" y1="100%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#475569"/>
-              <stop offset="50%" stop-color="#94A3B8"/>
-              <stop offset="100%" stop-color="#34D399"/>
-            </linearGradient>
-            <linearGradient id="navChipMetal" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#E2E8F0"/>
-              <stop offset="50%" stop-color="#94A3B8"/>
-              <stop offset="100%" stop-color="#475569"/>
+            <linearGradient id="shieldRimGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#94A3B8"/>
+              <stop offset="55%" stop-color="#34D399"/>
+              <stop offset="100%" stop-color="#10B981"/>
             </linearGradient>
           </defs>
-          <rect x="2" y="2" width="96" height="96" rx="22" fill="url(#navLogoBg)" stroke="url(#navMetalStroke)" stroke-width="3"/>
-          <path d="M10 74 L26 90 M15 86 L21 92 M83 13 L90 20" stroke="#94A3B8" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
-          <path d="M32 34 L48 18 L66 34" stroke="#ECFDF5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-          <polyline points="60,35 67,35 67,28" stroke="#34D399" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="32" cy="34" r="3.2" fill="#94A3B8"/>
-          <path d="M74 46 L82 64 L60 78" stroke="#ECFDF5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-          <polyline points="65,81 58,78 61,71" stroke="#34D399" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="74" cy="46" r="3.2" fill="#34D399"/>
-          <path d="M44 78 L20 66 L26 46" stroke="#CBD5E1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-          <polyline points="20,50 26,44 31,50" stroke="#94A3B8" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="44" cy="78" r="3.2" fill="#E11D48"/>
-          <path d="M42 30V36 M50 30V36 M58 30V36 M42 64V70 M50 64V70 M58 64V70 M30 42H36 M30 50H36 M30 58H36 M64 42H70 M64 50H70 M64 58H70" stroke="url(#navChipMetal)" stroke-width="2.4" stroke-linecap="round"/>
-          <rect x="36" y="36" width="28" height="28" rx="6" fill="#0B0F17" stroke="url(#navChipMetal)" stroke-width="2.4"/>
-          <path d="M41 50 H45 L48 43 L52 57 L55 50 H59" stroke="#10B981" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+
+          <!-- Contorno del Escudo deformado arriba a la derecha para envolver la Orquídea -->
+          <path d="M18 32 C18 24 25 22 48 22 C56 22 62 10 78 10 C96 10 108 24 104 42 C102 52 96 56 96 66 C96 88 76 104 56 112 C36 104 18 88 18 64 Z" 
+                fill="url(#shieldMetalGrad)" stroke="url(#shieldRimGrad)" stroke-width="3.5"/>
+          
+          <path d="M25 36 L54 28 L88 62 C88 82 72 96 56 103 C40 96 25 82 25 62 Z" 
+                fill="#0F172A" fill-opacity="0.55" stroke="#94A3B8" stroke-opacity="0.45" stroke-width="1.5"/>
+
+          <!-- Pistas de Circuito en la base del escudo -->
+          <path d="M46 98 L54 88 H72 M58 102 L64 94 H78" stroke="#34D399" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="72" cy="88" r="2.2" fill="#34D399"/>
+          <circle cx="78" cy="94" r="2.2" fill="#10B981"/>
+
+          <!-- Monograma Central "RT" -->
+          <text x="31" y="74" font-family="'Space Grotesk', sans-serif" font-weight="800" font-size="38" fill="#E2E8F0" stroke="#0B0F17" stroke-width="1.5">RT</text>
+
+          <!-- Orquídea Colombiana (Verde Esmeralda y Rojo Rubí) -->
+          <g transform="translate(62, 8)">
+            <ellipse cx="20" cy="12" rx="7" ry="12" fill="#10B981" stroke="#A7F3D0" stroke-width="1"/>
+            <ellipse cx="9" cy="17" rx="11" ry="7" transform="rotate(-20 9 17)" fill="#059669" stroke="#6EE7B7" stroke-width="1"/>
+            <ellipse cx="31" cy="17" rx="11" ry="7" transform="rotate(20 31 17)" fill="#059669" stroke="#6EE7B7" stroke-width="1"/>
+            <path d="M12 23 C8 32 14 38 20 37 C26 38 32 32 28 23 Z" fill="#E11D48" stroke="#FDA4AF" stroke-width="1"/>
+            <circle cx="20" cy="23" r="3" fill="#FECDD3"/>
+          </g>
         </svg>
 
         <div>
-          <div class="font-display font-extrabold text-xl sm:text-2xl tracking-tight leading-none flex items-baseline">
-            <span class="text-white">REMASTER&nbsp;T</span><span class="ec-emerald text-2xl sm:text-[27px]">E</span><span class="ec-ruby text-2xl sm:text-[27px]">C</span>
+          <div class="flex items-baseline leading-none">
+            <span class="remaster-metal-text text-xl sm:text-2xl">REMASTER</span>
+            <span class="tec-brush-te text-3xl sm:text-4xl ml-1.5">TE</span><span class="tec-brush-c text-3xl sm:text-4xl">C</span>
           </div>
-          <div class="flex items-center gap-1.5 mt-1">
-            <span class="font-mono text-[10px] tracking-widest uppercase text-slate-400">Hardware Grado A & Lab</span>
+          <div class="flex items-center gap-1.5 mt-0.5">
+            <span class="font-mono text-[10px] tracking-widest uppercase text-slate-400">Alta Calidad & Resistencia</span>
             <span class="w-1.5 h-1.5 rounded-full bg-brand-ruby"></span>
           </div>
         </div>
       </a>
 
-      <!-- Menú Rápido de 3 Pestañas Principales -->
+      <!-- MENÚ DE 4 PESTAÑAS PRINCIPALES -->
       <div class="flex flex-wrap items-center bg-slate-900/95 p-1.5 rounded-xl border border-slate-700/80 gap-1">
-        <button id="nav-equipos" onclick="switchMainTab('equipos')" class="px-4 py-2 rounded-lg text-xs sm:text-sm font-display font-bold transition flex items-center gap-2 bg-brand-emerald text-brand-carbon shadow-sm">
+        <button id="nav-equipos" onclick="switchMainTab('equipos')" class="px-3.5 py-2 rounded-lg text-xs sm:text-sm font-display font-bold transition flex items-center gap-1.5 bg-brand-emerald text-brand-carbon shadow-sm">
           <span>💻</span> Equipos Grado A
         </button>
-        <button id="nav-accesorios" onclick="switchMainTab('accesorios')" class="px-4 py-2 rounded-lg text-xs sm:text-sm font-display font-bold transition flex items-center gap-2 text-slate-300 hover:text-white">
+        <button id="nav-accesorios" onclick="switchMainTab('accesorios')" class="px-3.5 py-2 rounded-lg text-xs sm:text-sm font-display font-bold transition flex items-center gap-1.5 text-slate-300 hover:text-white">
           <span>🎒</span> Accesorios & Memorias
         </button>
-        <button id="nav-servicios" onclick="switchMainTab('servicios')" class="px-4 py-2 rounded-lg text-xs sm:text-sm font-display font-bold transition flex items-center gap-2 text-slate-300 hover:text-white">
-          <span>🚀</span> Servicio de Optimización (RAM/SSD)
+        <button id="nav-gaming" onclick="switchMainTab('gaming')" class="px-3.5 py-2 rounded-lg text-xs sm:text-sm font-display font-bold transition flex items-center gap-1.5 text-slate-300 hover:text-white">
+          <span>🎮</span> Videojuegos & Coleccionables
+        </button>
+        <button id="nav-servicios" onclick="switchMainTab('servicios')" class="px-3.5 py-2 rounded-lg text-xs sm:text-sm font-display font-bold transition flex items-center gap-1.5 text-slate-300 hover:text-white">
+          <span>🚀</span> Optimización (RAM/SSD)
         </button>
       </div>
 
-      <!-- Botón VIP WhatsApp -->
+      <!-- BOTÓN DE LISTA VIP WHATSAPP -->
       <a id="vip-btn" href="#" target="_blank"
-         class="hidden xl:flex bg-slate-800 hover:bg-brand-emerald text-white hover:text-brand-carbon border border-slate-600 font-display font-bold px-4 py-2 rounded-xl text-xs transition items-center gap-2">
+         class="hidden 2xl:flex bg-slate-800 hover:bg-brand-emerald text-white hover:text-brand-carbon border border-slate-600 font-display font-bold px-3.5 py-2 rounded-xl text-xs transition items-center gap-2">
         <span class="w-2 h-2 rounded-full bg-brand-ruby"></span>
         <span>Alertas VIP de Lotes</span>
       </a>
     </div>
   </nav>
 
-  <!-- BANNER TÉCNICO COMPACTO -->
+  <!-- ===================================================================== -->
+  <!-- BLOQUE 6: BANNER PRINCIPAL (HERO) CON PROPUESTA DE VALOR              -->
+  <!-- ===================================================================== -->
   <header class="bg-carbon-glow text-white border-b border-slate-800">
     <div class="max-w-7xl mx-auto px-4 py-5">
       <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div class="space-y-1">
           <div class="inline-flex items-center gap-2 text-brand-mint font-mono text-xs">
             <span class="bg-brand-ruby text-white px-2 py-0.5 rounded font-bold text-[10px]">INTERACTIVO</span>
-            <span>HAZ CLIC EN CUALQUIER PRODUCTO PARA DESPLEGAR SUS CARACTERÍSTICAS A DETALLE</span>
+            <span>HAZ CLIC EN CUALQUIER PRODUCTO PARA EMERGER SUS CARACTERÍSTICAS Y FOTOS</span>
           </div>
           <h1 class="font-display text-2xl sm:text-3xl font-bold tracking-tight">
             Potencia empresarial verificada. <span class="text-brand-emerald">Hasta 40% menos que en almacén.</span>
@@ -238,7 +293,7 @@
 
         <div class="flex flex-wrap gap-2 text-xs font-mono">
           <div class="bg-slate-900/90 border border-slate-700 px-3 py-2 rounded-xl flex items-center gap-1.5">
-            <span class="text-brand-emerald">■</span> Chasis Metálico Militar
+            <span class="text-brand-emerald">■</span> Material de Alta Calidad y Alta Resistencia
           </div>
           <div class="bg-slate-900/90 border border-slate-700 px-3 py-2 rounded-xl flex items-center gap-1.5">
             <span class="text-brand-emerald">■</span> SSD NVMe + RAM Auditada
@@ -251,12 +306,11 @@
     </div>
   </header>
 
-  <!-- ======================================================================= -->
-  <!-- PESTAÑA 1: EQUIPOS REACONDICIONADOS GRADO A                             -->
-  <!-- ======================================================================= -->
+  <!-- ===================================================================== -->
+  <!-- BLOQUE 7: PESTAÑA 1 — CATÁLOGO DE EQUIPOS GRADO A                     -->
+  <!-- Categorías en Google Sheets: portatiles, combos, monitores, tablets   -->
+  <!-- ===================================================================== -->
   <main id="section-equipos" class="max-w-7xl mx-auto px-4 py-7 flex-grow w-full">
-    
-    <!-- Menú Rápido de Categorías -->
     <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6 bg-white p-3.5 rounded-2xl border border-slate-300 shadow-sm">
       <div class="flex flex-wrap gap-1.5" id="filter-buttons">
         <button onclick="filterItems('todos', this)" class="filter-btn bg-brand-carbon text-white px-3.5 py-2 rounded-xl text-xs font-display font-bold transition">
@@ -276,26 +330,31 @@
         </button>
       </div>
 
-      <!-- Buscador instantáneo -->
-      <div class="relative w-full lg:w-72">
-        <input id="search-input" type="text" oninput="handleSearch()" placeholder="Buscar referencia, procesador, RAM..."
-               class="w-full pl-9 pr-4 py-2 text-xs bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-brand-emerald font-sans">
-        <span class="absolute left-3 top-2.5 text-slate-400 text-xs">🔍</span>
+      <!-- Buscador + Botón de refrescar inventario -->
+      <div class="flex items-center gap-2 w-full lg:w-auto">
+        <div class="relative flex-grow lg:w-64">
+          <input id="search-input" type="text" oninput="handleSearch()" placeholder="Buscar referencia, procesador, RAM..."
+                 class="w-full pl-9 pr-4 py-2 text-xs bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-brand-emerald font-sans">
+          <span class="absolute left-3 top-2.5 text-slate-400 text-xs">🔍</span>
+        </div>
+        <button onclick="cargarInventario(true)" title="Sincronizar cambios recientes de Google Sheets"
+                class="bg-slate-100 hover:bg-brand-emerald hover:text-brand-carbon text-slate-700 border border-slate-300 px-3 py-2 rounded-xl text-xs font-mono font-bold transition shrink-0">
+          🔄
+        </button>
       </div>
     </div>
 
-    <!-- Estado de Carga -->
     <div id="loading" class="text-center py-14 font-mono text-slate-500 text-sm">
       Sincronizando catálogo en tiempo real desde Google Sheets...
     </div>
 
-    <!-- Grilla Modular Estilo Framework -->
     <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"></div>
   </main>
 
-  <!-- ======================================================================= -->
-  <!-- PESTAÑA 2: ACCESORIOS (BASES REFRIGERANTES, USB, MICRO SD)              -->
-  <!-- ======================================================================= -->
+  <!-- ===================================================================== -->
+  <!-- BLOQUE 8: PESTAÑA 2 — CATÁLOGO DE ACCESORIOS Y MEMORIAS               -->
+  <!-- Categorías en Google Sheets: refrigeracion, usb, microsd, accesorios  -->
+  <!-- ===================================================================== -->
   <section id="section-accesorios" class="hidden max-w-7xl mx-auto px-4 py-7 flex-grow w-full">
     <div class="bg-brand-carbon text-white rounded-2xl p-6 mb-6 border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
       <div>
@@ -316,9 +375,73 @@
     <div id="accesorios-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"></div>
   </section>
 
-  <!-- ======================================================================= -->
-  <!-- PESTAÑA 3: LABORATORIO DE OPTIMIZACIÓN (UPGRADE RAM & SSD)              -->
-  <!-- ======================================================================= -->
+  <!-- ===================================================================== -->
+  <!-- BLOQUE 9: PESTAÑA 3 — VIDEOJUEGOS, CONSOLAS Y COLECCIONABLES          -->
+  <!-- Categorías en Google Sheets: juegos, consolas, coleccionables         -->
+  <!-- Incluye el Easter Egg de Age of Empires (Reliquia Oculta).            -->
+  <!-- ===================================================================== -->
+  <section id="section-gaming" class="hidden max-w-7xl mx-auto px-4 py-7 flex-grow w-full">
+    <div class="bg-carbon-glow text-white rounded-2xl p-6 mb-6 border border-slate-800 relative overflow-hidden">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+        <div class="space-y-1.5 max-w-2xl">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="font-mono text-xs text-brand-mint uppercase tracking-wider">Zona Gamer & Cultura Geek • REMASTER TEC</span>
+            <span class="bg-brand-ruby/20 border border-brand-ruby/50 text-rose-300 font-mono text-[10px] px-2 py-0.5 rounded">EDICIONES VERIFICADAS</span>
+          </div>
+          <h2 class="font-display text-2xl sm:text-3xl font-bold">Videojuegos, Consolas & Coleccionables</h2>
+          <p class="text-slate-300 text-xs sm:text-sm">
+            Juegos físicos, consolas, controles originales y piezas de colección seleccionadas. Haz clic en cualquier artículo para ver sus fotos reales y estado de conservación.
+          </p>
+        </div>
+
+        <!-- BOTÓN SUTIL DEL EASTER EGG (OPCIÓN B MODIFICADA — RELIQUIA AGE OF EMPIRES) -->
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 shrink-0">
+          <button id="aoe-trigger-btn" onclick="openAoeEasterEgg()"
+                  class="relic-glow bg-gradient-to-r from-amber-500/20 via-amber-400/15 to-emerald-500/20 hover:from-amber-500/35 hover:to-emerald-500/35 border border-amber-400/60 rounded-2xl px-4 py-3 text-left transition group flex items-center gap-3">
+            <span class="text-2xl group-hover:scale-110 transition-transform">🏛️</span>
+            <div>
+              <div class="font-mono text-[10px] text-amber-300 uppercase tracking-wider font-bold flex items-center gap-1.5">
+                <span>Reliquia Oculta</span>
+                <span class="italic text-emerald-300">«Wololo...»</span>
+              </div>
+              <div id="aoe-trigger-subtext" class="font-display text-xs font-bold text-white group-hover:text-amber-200">
+                ¿Conoces las claves del Imperio? Haz clic aquí
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Subfiltros de la Pestaña Gaming -->
+      <div class="flex flex-wrap items-center justify-between gap-3 mt-6 pt-5 border-t border-slate-800/90">
+        <div class="flex flex-wrap gap-2">
+          <button onclick="filterGaming('todos', this)" class="gam-btn bg-brand-emerald text-brand-carbon px-3.5 py-2 rounded-xl text-xs font-display font-bold transition">
+            Todos
+          </button>
+          <button onclick="filterGaming('juegos', this)" class="gam-btn bg-slate-800 text-slate-200 hover:bg-slate-700 px-3.5 py-2 rounded-xl text-xs font-display font-bold transition">
+            💿 Videojuegos (`juegos`)
+          </button>
+          <button onclick="filterGaming('consolas', this)" class="gam-btn bg-slate-800 text-slate-200 hover:bg-slate-700 px-3.5 py-2 rounded-xl text-xs font-display font-bold transition">
+            🕹️ Consolas & Controles (`consolas`)
+          </button>
+          <button onclick="filterGaming('coleccionables', this)" class="gam-btn bg-slate-800 text-slate-200 hover:bg-slate-700 px-3.5 py-2 rounded-xl text-xs font-display font-bold transition">
+            🏆 Coleccionables & Figuras (`coleccionables`)
+          </button>
+        </div>
+
+        <span class="font-mono text-[11px] text-slate-400">
+          💡 Tip: Encuentra el código clásico del Imperio arriba para ganar $30.000 COP
+        </span>
+      </div>
+    </div>
+
+    <!-- Contenedor donde aparecen las tarjetas de Videojuegos y Coleccionables -->
+    <div id="gaming-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"></div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- BLOQUE 10: PESTAÑA 4 — SERVICIO DE OPTIMIZACIÓN (UPGRADE RAM Y SSD)   -->
+  <!-- ===================================================================== -->
   <section id="section-servicios" class="hidden max-w-7xl mx-auto px-4 py-7 flex-grow w-full">
     <div class="bg-carbon-glow text-white rounded-3xl p-6 sm:p-10 mb-8 border border-slate-800">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -348,7 +471,6 @@
           </div>
         </div>
 
-        <!-- Configurador de Optimización -->
         <div class="lg:col-span-5 bg-slate-900/95 border border-emerald-500/40 rounded-2xl p-6 shadow-2xl">
           <div class="font-mono text-xs text-brand-mint uppercase font-bold mb-1">⚡ Configurador de Optimización</div>
           <h3 class="font-display text-xl font-bold text-white mb-4">Selecciona las mejoras para tu equipo</h3>
@@ -458,17 +580,122 @@
     </div>
   </section>
 
-  <!-- ======================================================================= -->
-  <!-- VISOR EMERGENTE DE FICHA TÉCNICA INTERACTIVA                            -->
-  <!-- ======================================================================= -->
+  <!-- ===================================================================== -->
+  <!-- BLOQUE 11: CUADRO DE DIÁLOGO DEL EASTER EGG (AGE OF EMPIRES)          -->
+  <!-- Qué hace: Muestra la ilustración de referencia de Age of Empires,     -->
+  <!-- permite ingresar un código clásico con límite de 3 intentos y         -->
+  <!-- desbloquea el Bono de $30.000 COP para compras mayores a $100.000.    -->
+  <!-- ===================================================================== -->
+  <div id="aoe-modal" class="fixed inset-0 z-50 hidden bg-brand-carbon/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-5 overflow-y-auto" onclick="closeAoeOnBackdrop(event)">
+    <div class="bg-slate-900 border-2 border-amber-400/70 rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl animate-modal-sheet text-white my-auto" onclick="event.stopPropagation()">
+      
+      <!-- Cabecera del Cofre / Reliquia -->
+      <div class="bg-gradient-to-r from-amber-950/90 via-slate-900 to-emerald-950/90 px-5 py-3.5 flex items-center justify-between border-b border-amber-500/30">
+        <div class="flex items-center gap-2">
+          <span class="text-lg">⚔️</span>
+          <span class="font-mono text-xs uppercase tracking-widest text-amber-300 font-bold">SECRET EASTER EGG • AGE OF EMPIRES</span>
+        </div>
+        <button onclick="closeAoeEasterEgg()" class="text-slate-300 hover:text-white bg-slate-800 hover:bg-brand-ruby w-8 h-8 rounded-lg flex items-center justify-center font-bold transition">
+          ✕
+        </button>
+      </div>
+
+      <div class="p-5 sm:p-6 space-y-4">
+        <!-- Ilustración de Referencia del Juego (Age of Empires: Casco Imperial, Espadas, Reliquia y Cobra Azul) -->
+        <div class="relative rounded-2xl overflow-hidden border border-amber-500/40 bg-slate-950 h-44 flex items-center justify-center">
+          <svg viewBox="0 0 500 200" class="w-full h-full object-cover" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="aoeSky" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#0B0F17"/>
+                <stop offset="50%" stop-color="#1E293B"/>
+                <stop offset="100%" stop-color="#451A03"/>
+              </linearGradient>
+              <linearGradient id="aoeGold" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#FDE68A"/>
+                <stop offset="50%" stop-color="#F59E0B"/>
+                <stop offset="100%" stop-color="#B45309"/>
+              </linearGradient>
+            </defs>
+            <rect width="500" height="200" fill="url(#aoeSky)"/>
+            <!-- Silueta de Castillo / Centro Urbano al fondo -->
+            <path d="M0 165 L40 165 L40 120 L55 120 L55 135 L70 135 L70 120 L85 120 L85 165 L415 165 L415 115 L430 115 L430 130 L445 130 L445 115 L460 115 L460 165 L500 165 L500 200 L0 200 Z" fill="#0F172A" opacity="0.85"/>
+            <!-- Espadas Cruzadas Imperiales -->
+            <path d="M185 145 L315 35 M195 35 L305 145" stroke="#CBD5E1" stroke-width="5" stroke-linecap="round"/>
+            <!-- Escudo / Casco Medieval Dorado Central -->
+            <path d="M250 28 C218 28 205 56 205 90 C205 122 250 148 250 148 C250 148 295 122 295 90 C295 56 282 28 250 28 Z" fill="url(#aoeGold)" stroke="#FEF3C7" stroke-width="2.5"/>
+            <path d="M220 78 H280 M250 45 V132" stroke="#451A03" stroke-width="6" stroke-linecap="round"/>
+            <!-- Guiño al mítico Shelby Cobra Azul con franjas blancas -->
+            <g transform="translate(340, 128)">
+              <rect x="0" y="10" width="66" height="18" rx="6" fill="#1D4ED8" stroke="#93C5FD" stroke-width="1.5"/>
+              <line x1="8" y1="16" x2="58" y2="16" stroke="#FFFFFF" stroke-width="2"/>
+              <circle cx="15" cy="28" r="6" fill="#0B0F17" stroke="#CBD5E1" stroke-width="2"/>
+              <circle cx="51" cy="28" r="6" fill="#0B0F17" stroke="#CBD5E1" stroke-width="2"/>
+            </g>
+            <!-- Texto de Referencia en la Imagen -->
+            <text x="250" y="182" text-anchor="middle" font-family="Georgia, serif" font-weight="bold" font-size="15" fill="#FDE68A" letter-spacing="3">
+              AGE OF EMPIRES • CONSOLA DE TRUCOS
+            </text>
+          </svg>
+          <span class="absolute top-2.5 right-2.5 bg-brand-carbon/90 border border-amber-400/50 text-amber-300 font-mono text-[11px] font-bold px-2.5 py-1 rounded-lg" id="aoe-attempts-badge">
+            Intentos: 3 / 3
+          </span>
+        </div>
+
+        <!-- Contenedor del Formulario del Reto -->
+        <div id="aoe-challenge-box" class="space-y-3">
+          <h3 class="font-display text-lg sm:text-xl font-bold text-amber-300">
+            ¡Has encontrado la Reliquia del Imperio!
+          </h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            Para desbloquear un **Bono de $30.000 COP**, escribe en la consola de abajo **cualquier código de trucos clásico de Age of Empires** (por ejemplo, el código para sacar el carro deportivo Cobra azul, o los trucos clásicos de oro, madera, piedra o comida).
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-2 pt-1">
+            <input id="aoe-code-input" type="text" placeholder="Escribe aquí el código (ej. el del Cobra azul o recursos)..."
+                   onkeydown="if(event.key==='Enter') verifyAoeCode()"
+                   class="flex-grow bg-slate-950 border border-slate-700 focus:border-amber-400 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-mono text-white focus:outline-none">
+            <button onclick="verifyAoeCode()"
+                    class="bg-amber-400 hover:bg-amber-300 text-brand-carbon font-display font-bold px-5 py-2.5 rounded-xl text-xs sm:text-sm transition shrink-0">
+              Validar Código
+            </button>
+          </div>
+
+          <p id="aoe-feedback-msg" class="text-xs font-mono text-rose-400 hidden"></p>
+        </div>
+
+        <!-- Contenedor de Premio Desbloqueado (Oculto hasta que acierte) -->
+        <div id="aoe-reward-box" class="hidden bg-emerald-950/70 border-2 border-brand-emerald rounded-2xl p-4 text-center space-y-2.5">
+          <div class="text-2xl">🏆 ¡WOLOLO! CÓDIGO CORRECTO</div>
+          <div class="font-display text-xl font-bold text-white">
+            Desbloqueaste un Bono de <span class="text-brand-mint">$30.000 COP</span>
+          </div>
+          <div class="bg-slate-950 border border-emerald-500/40 py-2 px-4 rounded-xl inline-block font-mono text-sm font-bold text-amber-300">
+            CUPÓN: AOE-REMASTER30K
+          </div>
+          <p class="text-[11px] text-slate-300 leading-relaxed">
+            El bono ya quedó **activo automáticamente** en tu sesión. Cuando toques el botón de WhatsApp en cualquier producto, se incluirá tu descuento de $30.000 COP.
+          </p>
+        </div>
+
+        <!-- Condiciones Oficiales del Bono -->
+        <div class="pt-3 border-t border-slate-800 text-[11px] font-mono text-slate-400 flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+          <span>📌 Condiciones: Válido en compras superiores a $100.000 COP.</span>
+          <span>No es canjeable por dinero en efectivo.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- BLOQUE 12: VENTANA EMERGENTE (MODAL) DE FICHA TÉCNICA Y FOTOS         -->
+  <!-- ===================================================================== -->
   <div id="product-modal" class="fixed inset-0 z-50 hidden bg-brand-carbon/85 backdrop-blur-md flex items-center justify-center p-2 sm:p-5 overflow-y-auto" onclick="closeModalOnBackdrop(event)">
     <div class="bg-brand-carbon border-2 border-slate-700 rounded-3xl max-w-5xl w-full overflow-hidden shadow-2xl animate-modal-sheet my-auto text-white" onclick="event.stopPropagation()">
       
-      <!-- Barra Superior Metálica del Visor -->
       <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 px-5 py-3.5 flex items-center justify-between border-b border-slate-700">
         <div class="flex items-center gap-3">
           <span class="inline-block w-2.5 h-2.5 rounded-full bg-brand-emerald"></span>
-          <span class="font-mono text-xs uppercase tracking-widest text-slate-300 font-bold">FICHA TÉCNICA INTERACTIVA</span>
+          <span class="font-mono text-xs uppercase tracking-widest text-slate-300 font-bold">FICHA INTERACTIVA DEL PRODUCTO</span>
           <span class="text-slate-600">|</span>
           <span id="modal-ref" class="font-mono text-xs text-brand-mint font-bold">REF</span>
           <span id="modal-badge" class="bg-brand-emerald text-brand-carbon font-mono text-[10px] font-bold px-2.5 py-0.5 rounded uppercase">Disponible</span>
@@ -478,10 +705,7 @@
         </button>
       </div>
 
-      <!-- Cuerpo Dividido -->
       <div class="grid grid-cols-1 lg:grid-cols-12">
-        
-        <!-- Izquierda: Galería y Auditoría -->
         <div class="lg:col-span-6 bg-slate-950 p-5 sm:p-6 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-slate-800">
           <div>
             <div class="relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 h-72 sm:h-80 flex items-center justify-center group">
@@ -508,21 +732,20 @@
               <div id="modal-grade" class="font-display font-bold text-xs text-brand-mint mt-0.5">Grado A</div>
             </div>
             <div class="bg-slate-900/90 border border-slate-800 p-2.5 rounded-xl">
-              <div class="font-mono text-[10px] text-slate-400 uppercase">AUDITORÍA</div>
-              <div class="font-display font-bold text-xs text-white mt-0.5">25 Puntos OK</div>
+              <div class="font-mono text-[10px] text-slate-400 uppercase" id="modal-mid-label">CALIDAD</div>
+              <div class="font-display font-bold text-xs text-white mt-0.5" id="modal-mid-value">Alta Resistencia</div>
             </div>
             <div class="bg-slate-900/90 border border-slate-800 p-2.5 rounded-xl">
-              <div class="font-mono text-[10px] text-slate-400 uppercase">IMPACTO ECO</div>
-              <div class="font-display font-bold text-xs text-brand-emerald mt-0.5">-1.8kg E-Waste</div>
+              <div class="font-mono text-[10px] text-slate-400 uppercase">GARANTÍA</div>
+              <div class="font-display font-bold text-xs text-brand-emerald mt-0.5">Verificada</div>
             </div>
           </div>
         </div>
 
-        <!-- Derecha: Características Emergentes Animadas -->
         <div class="lg:col-span-6 p-5 sm:p-7 flex flex-col justify-between bg-slate-900">
           <div>
             <div class="font-mono text-[11px] text-brand-mint uppercase tracking-wider mb-1">
-              ESPECIFICACIONES VERIFICADAS EN LABORATORIO
+              DETALLES VERIFICADOS POR REMASTER TEC
             </div>
             <h3 id="modal-title" class="font-display text-xl sm:text-2xl font-bold text-white leading-snug"></h3>
 
@@ -540,23 +763,28 @@
               </div>
             </div>
 
+            <!-- Aviso si el usuario tiene el bono de $30.000 activo -->
+            <div id="modal-bonus-notice" class="hidden mt-3 bg-amber-500/15 border border-amber-400/50 text-amber-200 px-3.5 py-2 rounded-xl text-xs font-mono">
+              🏆 <strong>Bono Gamer Activo (-$30.000 COP):</strong> Aplicable a este pedido si el total supera $100.000 COP.
+            </div>
+
             <div class="mt-5">
               <div class="flex items-center justify-between mb-3">
                 <h4 class="font-mono text-xs font-bold uppercase text-slate-300 flex items-center gap-2">
                   <span class="w-2 h-2 rounded-full bg-brand-emerald"></span>
                   <span>Características del Producto:</span>
                 </h4>
-                <span class="font-mono text-[10px] text-slate-400">100% TESTEADO</span>
+                <span class="font-mono text-[10px] text-slate-400">100% AUDITADO</span>
               </div>
 
-              <div id="modal-specs" class="space-y-2.5 max-h-64 overflow-y-auto pr-1"></div>
+              <div id="modal-specs" class="space-y-2.5 max-h-60 overflow-y-auto pr-1"></div>
             </div>
           </div>
 
           <div class="mt-6 pt-4 border-t border-slate-800 space-y-2.5">
             <a id="modal-wa-btn" href="#" target="_blank"
                class="block w-full bg-brand-emerald hover:bg-brand-emeraldDark text-brand-carbon font-display font-bold py-3.5 rounded-xl text-sm text-center transition shadow-lg">
-              💬 Apartar o Pedir Video de Funcionamiento por WhatsApp
+              💬 Apartar o Pedir Video por WhatsApp
             </a>
             <button onclick="closeProductModal()" class="block w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-mono text-xs py-2.5 rounded-xl text-center transition">
               ← Volver al catálogo
@@ -568,54 +796,43 @@
     </div>
   </div>
 
-  <!-- FOOTER -->
+  <!-- ===================================================================== -->
+  <!-- BLOQUE 13: PIE DE PÁGINA (FOOTER)                                     -->
+  <!-- ===================================================================== -->
   <footer class="bg-brand-carbon text-slate-400 border-t border-slate-800 mt-14">
     <div class="max-w-7xl mx-auto px-4 py-10">
       <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-slate-800/80">
         
         <div class="flex items-center gap-4">
-          <svg class="w-14 h-14 shrink-0" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="2" y="2" width="96" height="96" rx="22" fill="url(#navLogoBg)" stroke="url(#navMetalStroke)" stroke-width="3"/>
-            <path d="M10 74 L26 90 M15 86 L21 92 M83 13 L90 20" stroke="#94A3B8" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
-            <path d="M32 34 L48 18 L66 34" stroke="#ECFDF5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-            <polyline points="60,35 67,35 67,28" stroke="#34D399" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M74 46 L82 64 L60 78" stroke="#ECFDF5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-            <polyline points="65,81 58,78 61,71" stroke="#34D399" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M44 78 L20 66 L26 46" stroke="#CBD5E1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-            <polyline points="20,50 26,44 31,50" stroke="#94A3B8" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <rect x="36" y="36" width="28" height="28" rx="6" fill="#0B0F17" stroke="url(#navChipMetal)" stroke-width="2.4"/>
-            <path d="M41 50 H45 L48 43 L52 57 L55 50 H59" stroke="#10B981" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <div>
-            <div class="font-display font-extrabold text-xl text-white tracking-tight">
-              REMASTER T<span class="ec-emerald text-2xl">E</span><span class="ec-ruby text-2xl">C</span>
-            </div>
-            <p class="text-xs text-slate-400 mt-0.5">
-              Tecnología Empresarial Reacondicionada Grado A, Accesorios & Laboratorio de Optimización.
-            </p>
+          <div class="flex items-baseline leading-none">
+            <span class="remaster-metal-text text-xl">REMASTER</span>
+            <span class="tec-brush-te text-3xl ml-1.5">TE</span><span class="tec-brush-c text-3xl">C</span>
           </div>
+          <span class="text-slate-700">|</span>
+          <p class="text-xs text-slate-400">
+            Equipos de alta calidad con alta resistencia, Gaming, Accesorios & Laboratorio de Optimización.
+          </p>
         </div>
 
-        <div class="flex flex-wrap items-center gap-2">
-          <button onclick="downloadLogoPNG('horizontal')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 px-3 py-2 rounded-xl font-mono text-[11px] transition">
-            ⬇ Logo Horizontal (PNG)
-          </button>
-          <button onclick="downloadLogoPNG('vertical')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 px-3 py-2 rounded-xl font-mono text-[11px] transition">
-            ⬇ Logo Emblema Vertical (PNG)
-          </button>
+        <div class="font-mono text-xs text-slate-300">
+          WhatsApp Oficial: <strong class="text-brand-mint">+57 302 773 0460</strong> • Bogotá, Colombia
         </div>
       </div>
 
       <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-slate-500 gap-2">
-        <span>© 2026 REMASTER TEC • Bogotá, Colombia</span>
-        <span>WhatsApp Oficial: +57 302 773 0460</span>
+        <span>© 2026 REMASTER TEC • Todos los derechos reservados</span>
+        <span>remastertec.shop</span>
       </div>
     </div>
   </footer>
 
-  <canvas id="logo-export-canvas" class="hidden"></canvas>
-
+  <!-- ===================================================================== -->
+  <!-- BLOQUE 14: LÓGICA JAVASCRIPT (CONEXIÓN A GOOGLE SHEETS Y EASTER EGG)  -->
+  <!-- ===================================================================== -->
   <script>
+    // -------------------------------------------------------------------------
+    // SECCIÓN 14.1: DATOS DE CONEXIÓN (WHATSAPP Y LINK CSV DE GOOGLE SHEETS)
+    // -------------------------------------------------------------------------
     const WHATSAPP_NUMBER = "573027730460";
     const GOOGLE_SHEETS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTIyBLNtltWSTLYcEM1mXe9wHyewkBiL87GXj1g9TH3Kz5CJlTRmhH9UV8NE54bpbUBCRrlf-sPElls/pub?output=csv";
 
@@ -623,23 +840,170 @@
 
     let inventarioGlobal = [];
     let filtroActualEquipos = 'todos';
+    let filtroActualAccesorios = 'todos';
+    let filtroActualGaming = 'todos';
     let modalPhotos = [];
     let currentPhotoIdx = 0;
 
+    // Clasificación de categorías según tu hoja de Google Sheets
     const CATEGORIAS_ACCESORIOS = ['accesorios', 'refrigeracion', 'usb', 'microsd'];
+    const CATEGORIAS_GAMING = ['juegos', 'videojuegos', 'consolas', 'coleccionables', 'gaming'];
 
-    function cargarInventario() {
+    // -------------------------------------------------------------------------
+    // SECCIÓN 14.2: ESTADO DEL EASTER EGG DE AGE OF EMPIRES (3 INTENTOS)
+    // -------------------------------------------------------------------------
+    const AOE_VALID_CODES = [
+      "how do you turn this on",
+      "howdoyouturnthison",
+      "cheese steak jimmy's",
+      "cheesesteakjimmys",
+      "cheese steak jimmys",
+      "robin hood",
+      "robinhood",
+      "rock on",
+      "rockon",
+      "lumberjack",
+      "aegis",
+      "marco",
+      "polo",
+      "woof woof",
+      "furious the monkey boy",
+      "i love the monkey head",
+      "to smithereens",
+      "torpedo",
+      "black death",
+      "wimpywimpywimpy",
+      "bigdaddy",
+      "big daddy",
+      "photon man",
+      "e=mc2 trooper",
+      "pow",
+      "wololo"
+    ];
+
+    let aoeUnlocked = localStorage.getItem('rt_aoe_unlocked') === 'true';
+    let aoeAttemptsLeft = parseInt(localStorage.getItem('rt_aoe_attempts') ?? '3', 10);
+
+    function syncEasterEggUI() {
+      const topPill = document.getElementById('top-bonus-pill');
+      const triggerSub = document.getElementById('aoe-trigger-subtext');
+      const attemptsBadge = document.getElementById('aoe-attempts-badge');
+      const challengeBox = document.getElementById('aoe-challenge-box');
+      const rewardBox = document.getElementById('aoe-reward-box');
+
+      if (aoeUnlocked) {
+        topPill.classList.remove('hidden');
+        triggerSub.innerText = "🏆 Bono de $30.000 COP Desbloqueado";
+        attemptsBadge.innerText = "¡Desbloqueado!";
+        challengeBox.classList.add('hidden');
+        rewardBox.classList.remove('hidden');
+      } else {
+        attemptsBadge.innerText = `Intentos: ${aoeAttemptsLeft} / 3`;
+        if (aoeAttemptsLeft <= 0) {
+          triggerSub.innerText = "Reliquia sellada (0 intentos)";
+        }
+      }
+    }
+
+    function openAoeEasterEgg() {
+      syncEasterEggUI();
+      const feedback = document.getElementById('aoe-feedback-msg');
+      if (!aoeUnlocked && aoeAttemptsLeft <= 0) {
+        feedback.innerText = "Has agotado tus 3 intentos. La reliquia del Imperio ha quedado sellada.";
+        feedback.classList.remove('hidden');
+        document.getElementById('aoe-code-input').disabled = true;
+      }
+      document.getElementById('aoe-modal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeAoeEasterEgg() {
+      document.getElementById('aoe-modal').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+
+    function closeAoeOnBackdrop(e) {
+      if (e.target.id === 'aoe-modal') closeAoeEasterEgg();
+    }
+
+    function verifyAoeCode() {
+      if (aoeUnlocked || aoeAttemptsLeft <= 0) return;
+
+      const inputEl = document.getElementById('aoe-code-input');
+      const feedback = document.getElementById('aoe-feedback-msg');
+      const candidate = (inputEl.value || '').toLowerCase().trim().replace(/\s+/g, ' ');
+
+      if (!candidate) {
+        feedback.innerText = "Escribe un código antes de validar.";
+        feedback.classList.remove('hidden');
+        return;
+      }
+
+      if (AOE_VALID_CODES.includes(candidate)) {
+        aoeUnlocked = true;
+        localStorage.setItem('rt_aoe_unlocked', 'true');
+        feedback.classList.add('hidden');
+        syncEasterEggUI();
+        // Actualiza los enlaces de WhatsApp de las tarjetas con el bono activo
+        renderProducts(filtroActualEquipos, document.getElementById('search-input').value);
+        renderAccesorios(filtroActualAccesorios);
+        renderGaming(filtroActualGaming);
+        updateUpgradeQuote();
+      } else {
+        aoeAttemptsLeft = Math.max(0, aoeAttemptsLeft - 1);
+        localStorage.setItem('rt_aoe_attempts', String(aoeAttemptsLeft));
+        syncEasterEggUI();
+
+        if (aoeAttemptsLeft > 0) {
+          feedback.innerText = `❌ Código incorrecto. Te quedan ${aoeAttemptsLeft} intento(s). Pista: "how do you turn this on" o "robin hood".`;
+        } else {
+          feedback.innerText = "🔒 Agotaste tus 3 intentos. La reliquia ha quedado sellada.";
+          inputEl.disabled = true;
+        }
+        feedback.classList.remove('hidden');
+      }
+    }
+
+    // Limpia barras invertidas accidentales como 14\" -> 14"
+    function cleanText(str) {
+      return (str || '').replace(/\\"/g, '"').replace(/\\'/g, "'").trim();
+    }
+
+    // Construye el mensaje de WhatsApp anexando el Bono Gamer si fue desbloqueado
+    function buildWhatsAppProductMsg(p) {
+      let base = `Hola REMASTER TEC! Me interesa el *${cleanText(p.titulo)}* (Ref: ${cleanText(p.id) || '-'}) de ${cleanText(p.precio_remate)}.`;
+      if (aoeUnlocked) {
+        base += ` 🏆 Desbloqueé el Easter Egg de Age of Empires (Cupón *AOE-REMASTER30K* para bono de $30.000 COP en compras mayores a $100.000 COP, no canjeable por efectivo).`;
+      }
+      base += ` ¿Sigue disponible?`;
+      return encodeURIComponent(base);
+    }
+
+    // -------------------------------------------------------------------------
+    // SECCIÓN 14.3: DESCARGA DEL INVENTARIO DESDE GOOGLE SHEETS
+    // -------------------------------------------------------------------------
+    function cargarInventario(forzarRefresco = false) {
       const loadingEl = document.getElementById('loading');
+      loadingEl.style.display = 'block';
 
-      Papa.parse(GOOGLE_SHEETS_CSV_URL, {
+      const urlFinal = forzarRefresco
+        ? `${GOOGLE_SHEETS_CSV_URL}&t=${Date.now()}`
+        : GOOGLE_SHEETS_CSV_URL;
+
+      Papa.parse(urlFinal, {
         download: true,
         header: true,
         skipEmptyLines: true,
         complete: function(results) {
-          inventarioGlobal = (results.data || []).filter(item => item.titulo && item.titulo.trim() !== "");
+          inventarioGlobal = (results.data || [])
+            .filter(item => item.titulo && item.titulo.trim() !== "")
+            .map((item, idx) => ({ ...item, _idx: idx }));
+
           loadingEl.style.display = 'none';
-          renderProducts('todos');
-          renderAccesorios('todos');
+          syncEasterEggUI();
+          renderProducts(filtroActualEquipos);
+          renderAccesorios(filtroActualAccesorios);
+          renderGaming(filtroActualGaming);
           updateUpgradeQuote();
         },
         error: function() {
@@ -656,7 +1020,12 @@
         .filter(Boolean);
     }
 
-    function createCardHTML(p, encodedItem) {
+    // -------------------------------------------------------------------------
+    // SECCIÓN 14.4: GENERACIÓN DE TARJETAS CON ÍNDICE SEGURO
+    // -------------------------------------------------------------------------
+    function createCardHTML(p) {
+      const itemIndex = p._idx;
+      const tituloLimpio = cleanText(p.titulo);
       const estado = (p.estado_stock || 'disponible').toLowerCase().trim();
       const esVendido = estado === 'vendido';
       const badgeStyle = esVendido
@@ -665,19 +1034,19 @@
 
       const fotos = parsePhotos(p.imagen);
       const tieneFoto = fotos.length > 0;
-      const listaSpecs = (p.specs || '').split('|').map(s => s.trim()).filter(Boolean);
-      const mensajeWA = encodeURIComponent(`Hola REMASTER TEC! Me interesa el *${p.titulo}* (Ref: ${p.id || '-'}) de ${p.precio_remate || ''}. ¿Sigue disponible?`);
+      const listaSpecs = cleanText(p.specs).split('|').map(s => s.trim()).filter(Boolean);
+      const mensajeWA = buildWhatsAppProductMsg(p);
 
       return `
-        <article onclick="openProductModal('${encodedItem}')" class="framework-card rounded-2xl overflow-hidden flex flex-col justify-between cursor-pointer group ${esVendido ? 'opacity-60 grayscale-[35%]' : ''}">
+        <article onclick="openProductModalByIndex(${itemIndex})" class="framework-card rounded-2xl overflow-hidden flex flex-col justify-between cursor-pointer group ${esVendido ? 'opacity-60 grayscale-[35%]' : ''}">
           <div>
             <div class="relative h-48 bg-slate-900 overflow-hidden flex items-center justify-center border-b border-slate-200">
               ${tieneFoto
-                ? `<img src="${fotos[0]}" alt="${p.titulo}" class="w-full h-full object-cover transition duration-500 group-hover:scale-105">`
+                ? `<img src="${fotos[0]}" alt="${tituloLimpio.replace(/"/g, '&quot;')}" class="w-full h-full object-cover transition duration-500 group-hover:scale-105">`
                 : `<div class="text-center p-4 font-mono text-xs text-slate-400">REMASTER TEC<br><span class="text-[10px] text-slate-500">Ver ficha técnica</span></div>`
               }
               <span class="absolute top-2.5 left-2.5 ${badgeStyle} font-mono text-[10px] font-bold px-2.5 py-0.5 rounded uppercase shadow-sm">
-                ${p.stock_texto || 'Disponible'}
+                ${cleanText(p.stock_texto) || 'Disponible'}
               </span>
               ${fotos.length > 1
                 ? `<span class="absolute top-2.5 right-2.5 bg-brand-carbon/85 text-white font-mono text-[10px] px-2 py-0.5 rounded border border-slate-700">
@@ -686,7 +1055,7 @@
                 : ''
               }
               <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-carbon/95 via-brand-carbon/50 to-transparent p-2.5 flex items-center justify-between">
-                <span class="font-mono text-[10px] text-brand-mint font-semibold">✓ ${p.grado_estetico || 'Verificado'}</span>
+                <span class="font-mono text-[10px] text-brand-mint font-semibold">✓ ${cleanText(p.grado_estetico) || 'Verificado'}</span>
                 <span class="font-mono text-[10px] text-white bg-brand-emerald/25 border border-brand-emerald/60 px-2.5 py-0.5 rounded group-hover:bg-brand-emerald group-hover:text-brand-carbon transition font-bold">
                   ⚡ Emerger Ficha
                 </span>
@@ -695,17 +1064,17 @@
 
             <div class="p-4">
               <div class="flex items-center justify-between text-[11px] font-mono text-slate-500 mb-1">
-                <span>REF: ${p.id || '-'}</span>
-                <span class="text-emerald-700 font-semibold">🌱 Eco-Tech</span>
+                <span>REF: ${cleanText(p.id) || '-'}</span>
+                <span class="text-emerald-700 font-semibold">🌱 REMASTER TEC</span>
               </div>
 
               <h3 class="font-display text-base font-bold text-brand-carbon leading-snug line-clamp-2 group-hover:text-brand-emeraldDark transition">
-                ${p.titulo}
+                ${tituloLimpio}
               </h3>
 
               <div class="mt-2.5 flex items-baseline gap-2">
-                <span class="font-mono text-xl font-bold text-brand-carbon">${p.precio_remate || ''}</span>
-                ${p.precio_referencia ? `<span class="font-mono text-xs text-slate-400 line-through">${p.precio_referencia}</span>` : ''}
+                <span class="font-mono text-xl font-bold text-brand-carbon">${cleanText(p.precio_remate)}</span>
+                ${p.precio_referencia ? `<span class="font-mono text-xs text-slate-400 line-through">${cleanText(p.precio_referencia)}</span>` : ''}
               </div>
 
               ${listaSpecs.length > 0 ? `
@@ -722,8 +1091,8 @@
           </div>
 
           <div class="px-4 pb-4 pt-1 flex gap-2" onclick="event.stopPropagation()">
-            <button onclick="openProductModal('${encodedItem}')" class="w-1/2 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-brand-carbon font-display font-bold py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-1">
-              <span>🔍</span> Características
+            <button onclick="openProductModalByIndex(${itemIndex})" class="w-1/2 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-brand-carbon font-display font-bold py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-1">
+              <span>🔍</span> Detalles
             </button>
             ${esVendido
               ? `<button disabled class="w-1/2 bg-slate-200 text-slate-500 font-display font-bold py-2.5 rounded-xl text-xs cursor-not-allowed">
@@ -739,14 +1108,18 @@
       `;
     }
 
+    // -------------------------------------------------------------------------
+    // SECCIÓN 14.5: RENDERIZADO DE LAS 3 SECCIONES DE PRODUCTOS
+    // -------------------------------------------------------------------------
     function renderProducts(filtro = 'todos', searchQuery = '') {
       filtroActualEquipos = filtro;
       const grid = document.getElementById('product-grid');
       grid.innerHTML = '';
 
+      // Excluye accesorios y videojuegos de la pestaña de Equipos Empresariales
       let lista = inventarioGlobal.filter(p => {
         const cat = (p.categoria || '').toLowerCase().trim();
-        return !CATEGORIAS_ACCESORIOS.includes(cat);
+        return !CATEGORIAS_ACCESORIOS.includes(cat) && !CATEGORIAS_GAMING.includes(cat);
       });
 
       if (filtro !== 'todos') {
@@ -770,10 +1143,7 @@
         return;
       }
 
-      lista.forEach(p => {
-        const encoded = encodeURIComponent(JSON.stringify(p));
-        grid.innerHTML += createCardHTML(p, encoded);
-      });
+      grid.innerHTML = lista.map(p => createCardHTML(p)).join('');
     }
 
     function handleSearch() {
@@ -793,6 +1163,7 @@
     }
 
     function renderAccesorios(subfiltro = 'todos') {
+      filtroActualAccesorios = subfiltro;
       const grid = document.getElementById('accesorios-grid');
       grid.innerHTML = '';
 
@@ -812,15 +1183,12 @@
       if (filtrados.length === 0) {
         grid.innerHTML = `
           <div class="col-span-full bg-white rounded-2xl border border-slate-300 p-10 text-center text-slate-500 text-sm">
-            Todavía no hay accesorios cargados en esta categoría dentro de tu hoja de Google Sheets. (Usa las categorías: <strong>refrigeracion</strong>, <strong>usb</strong> o <strong>microsd</strong>).
+            Todavía no hay accesorios cargados en esta categoría dentro de tu hoja de Google Sheets. (Usa en la columna categoria: <strong>refrigeracion</strong>, <strong>usb</strong> o <strong>microsd</strong>).
           </div>`;
         return;
       }
 
-      filtrados.forEach(item => {
-        const encoded = encodeURIComponent(JSON.stringify(item));
-        grid.innerHTML += createCardHTML(item, encoded);
-      });
+      grid.innerHTML = filtrados.map(item => createCardHTML(item)).join('');
     }
 
     function filterAccesorios(sub, btnEl) {
@@ -833,49 +1201,109 @@
       }
     }
 
-    function switchMainTab(tab) {
-      const secEquipos = document.getElementById('section-equipos');
-      const secAccesorios = document.getElementById('section-accesorios');
-      const secServicios = document.getElementById('section-servicios');
+    // Renderizado de la nueva Pestaña de Videojuegos y Coleccionables
+    function renderGaming(subfiltro = 'todos') {
+      filtroActualGaming = subfiltro;
+      const grid = document.getElementById('gaming-grid');
+      grid.innerHTML = '';
 
-      const navEquipos = document.getElementById('nav-equipos');
-      const navAccesorios = document.getElementById('nav-accesorios');
-      const navServicios = document.getElementById('nav-servicios');
+      const todosGaming = inventarioGlobal.filter(p => {
+        const cat = (p.categoria || '').toLowerCase().trim();
+        return CATEGORIAS_GAMING.includes(cat);
+      });
 
-      const inactiveClass = "px-4 py-2 rounded-lg text-xs sm:text-sm font-display font-bold transition flex items-center gap-2 text-slate-300 hover:text-white";
-      const activeClass = "px-4 py-2 rounded-lg text-xs sm:text-sm font-display font-bold transition flex items-center gap-2 bg-brand-emerald text-brand-carbon shadow-sm";
+      const filtrados = subfiltro === 'todos'
+        ? todosGaming
+        : todosGaming.filter(g => {
+            const cat = (g.categoria || '').toLowerCase().trim();
+            if (subfiltro === 'juegos') return cat === 'juegos' || cat === 'videojuegos';
+            return cat === subfiltro;
+          });
 
-      secEquipos.classList.add('hidden');
-      secAccesorios.classList.add('hidden');
-      secServicios.classList.add('hidden');
+      if (filtrados.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full bg-white rounded-2xl border border-slate-300 p-10 text-center text-slate-500 text-sm">
+            Todavía no hay artículos cargados en esta subcategoría dentro de tu Google Sheets. (Para agregarlos, escribe en la columna <strong>categoria</strong>: <strong>juegos</strong>, <strong>consolas</strong> o <strong>coleccionables</strong>).
+          </div>`;
+        return;
+      }
 
-      navEquipos.className = inactiveClass;
-      navAccesorios.className = inactiveClass;
-      navServicios.className = inactiveClass;
+      grid.innerHTML = filtrados.map(item => createCardHTML(item)).join('');
+    }
 
-      if (tab === 'accesorios') {
-        secAccesorios.classList.remove('hidden');
-        navAccesorios.className = activeClass;
-      } else if (tab === 'servicios') {
-        secServicios.classList.remove('hidden');
-        navServicios.className = activeClass;
-      } else {
-        secEquipos.classList.remove('hidden');
-        navEquipos.className = activeClass;
+    function filterGaming(sub, btnEl) {
+      renderGaming(sub);
+      document.querySelectorAll('.gam-btn').forEach(btn => {
+        btn.className = "gam-btn bg-slate-800 text-slate-200 hover:bg-slate-700 px-3.5 py-2 rounded-xl text-xs font-display font-bold transition";
+      });
+      if (btnEl) {
+        btnEl.className = "gam-btn bg-brand-emerald text-brand-carbon px-3.5 py-2 rounded-xl text-xs font-display font-bold transition";
       }
     }
 
-    function openProductModal(encodedItem) {
-      const p = JSON.parse(decodeURIComponent(encodedItem));
+    // -------------------------------------------------------------------------
+    // SECCIÓN 14.6: NAVEGACIÓN ENTRE LAS 4 PESTAÑAS PRINCIPALES
+    // -------------------------------------------------------------------------
+    function switchMainTab(tab) {
+      const sections = {
+        equipos: document.getElementById('section-equipos'),
+        accesorios: document.getElementById('section-accesorios'),
+        gaming: document.getElementById('section-gaming'),
+        servicios: document.getElementById('section-servicios')
+      };
+
+      const navs = {
+        equipos: document.getElementById('nav-equipos'),
+        accesorios: document.getElementById('nav-accesorios'),
+        gaming: document.getElementById('nav-gaming'),
+        servicios: document.getElementById('nav-servicios')
+      };
+
+      const inactiveClass = "px-3.5 py-2 rounded-lg text-xs sm:text-sm font-display font-bold transition flex items-center gap-1.5 text-slate-300 hover:text-white";
+      const activeClass = "px-3.5 py-2 rounded-lg text-xs sm:text-sm font-display font-bold transition flex items-center gap-1.5 bg-brand-emerald text-brand-carbon shadow-sm";
+
+      Object.keys(sections).forEach(k => {
+        sections[k].classList.add('hidden');
+        navs[k].className = inactiveClass;
+      });
+
+      if (sections[tab]) {
+        sections[tab].classList.remove('hidden');
+        navs[tab].className = activeClass;
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // SECCIÓN 14.7: FICHA EMERGENTE DE PRODUCTO (MODAL DE DETALLE)
+    // -------------------------------------------------------------------------
+    function openProductModalByIndex(idx) {
+      const p = inventarioGlobal.find(item => item._idx === idx);
+      if (!p) return;
+
       modalPhotos = parsePhotos(p.imagen);
       currentPhotoIdx = 0;
 
-      document.getElementById('modal-title').innerText = p.titulo || '';
-      document.getElementById('modal-ref').innerText = `REF: ${p.id || '-'}`;
-      document.getElementById('modal-badge').innerText = p.stock_texto || 'Disponible';
-      document.getElementById('modal-grade').innerText = p.grado_estetico || 'Grado A';
-      document.getElementById('modal-price').innerText = p.precio_remate || '';
-      document.getElementById('modal-old-price').innerText = p.precio_referencia || '';
+      const cat = (p.categoria || '').toLowerCase().trim();
+      const esGaming = CATEGORIAS_GAMING.includes(cat);
+
+      document.getElementById('modal-title').innerText = cleanText(p.titulo);
+      document.getElementById('modal-ref').innerText = `REF: ${cleanText(p.id) || '-'}`;
+      document.getElementById('modal-badge').innerText = cleanText(p.stock_texto) || 'Disponible';
+      document.getElementById('modal-grade').innerText = cleanText(p.grado_estetico) || 'Verificado';
+      document.getElementById('modal-price').innerText = cleanText(p.precio_remate);
+      document.getElementById('modal-old-price').innerText = cleanText(p.precio_referencia);
+
+      // Adapta la etiqueta central si es un videojuego/coleccionable o hardware
+      document.getElementById('modal-mid-label').innerText = esGaming ? 'EDICIÓN' : 'MATERIAL';
+      document.getElementById('modal-mid-value').innerText = esGaming ? 'Original Colección' : 'Alta Resistencia';
+
+      // Muestra aviso si el usuario tiene el bono de $30.000 COP activo
+      const bonusNotice = document.getElementById('modal-bonus-notice');
+      if (aoeUnlocked) {
+        bonusNotice.classList.remove('hidden');
+      } else {
+        bonusNotice.classList.add('hidden');
+      }
 
       const numRemate = parseInt((p.precio_remate || '').replace(/\D/g, ''), 10);
       const numRef = parseInt((p.precio_referencia || '').replace(/\D/g, ''), 10);
@@ -888,7 +1316,7 @@
         discountPill.classList.add('hidden');
       }
 
-      const specsList = (p.specs || '').split('|').map(s => s.trim()).filter(Boolean);
+      const specsList = cleanText(p.specs).split('|').map(s => s.trim()).filter(Boolean);
       const specsContainer = document.getElementById('modal-specs');
 
       if (specsList.length > 0) {
@@ -907,13 +1335,12 @@
       } else {
         specsContainer.innerHTML = `
           <div class="bg-slate-950 border border-slate-800 p-3.5 rounded-xl text-xs text-slate-400">
-            Equipo verificado bajo estándar REMASTER TEC Grado A. Solicita el video de funcionamiento en vivo por WhatsApp.
+            Artículo verificado por REMASTER TEC. Solicita video o fotos adicionales por WhatsApp.
           </div>
         `;
       }
 
-      const msg = encodeURIComponent(`Hola REMASTER TEC! Vi la ficha técnica del *${p.titulo}* (Ref: ${p.id || '-'}) en ${p.precio_remate || ''}. Quiero apartarlo o ver video de funcionamiento.`);
-      document.getElementById('modal-wa-btn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
+      document.getElementById('modal-wa-btn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${buildWhatsAppProductMsg(p)}`;
 
       updateModalGalleryView();
       document.getElementById('product-modal').classList.remove('hidden');
@@ -976,101 +1403,51 @@
     }
 
     document.addEventListener('keydown', (e) => {
-      const modal = document.getElementById('product-modal');
-      if (modal.classList.contains('hidden')) return;
+      const prodModal = document.getElementById('product-modal');
+      const aoeModal = document.getElementById('aoe-modal');
+      if (!aoeModal.classList.contains('hidden') && e.key === 'Escape') {
+        closeAoeEasterEgg();
+        return;
+      }
+      if (prodModal.classList.contains('hidden')) return;
       if (e.key === 'Escape') closeProductModal();
       if (e.key === 'ArrowRight') changeModalPhoto(1);
       if (e.key === 'ArrowLeft') changeModalPhoto(-1);
     });
 
+    // -------------------------------------------------------------------------
+    // SECCIÓN 14.8: COTIZADOR DE OPTIMIZACIÓN (ENVÍA PEDIDO A WHATSAPP)
+    // -------------------------------------------------------------------------
     function updateUpgradeQuote() {
       const device = document.getElementById('upg-device').value;
       const ssd = document.getElementById('upg-ssd').value;
       const ram = document.getElementById('upg-ram').value;
       const maint = document.getElementById('upg-maint').value;
 
-      const msg = encodeURIComponent(
+      let msgText =
         `Hola REMASTER TEC! Quiero cotizar la optimización de mi *${device}* en Bogotá:\n` +
         `• Disco Sólido: ${ssd}\n` +
         `• Memoria RAM: ${ram}\n` +
-        `• Mantenimiento: ${maint}\n` +
-        `¿Me indican precio y disponibilidad para agendar?`
-      );
-      document.getElementById('upg-wa-btn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
+        `• Mantenimiento: ${maint}\n`;
+
+      if (aoeUnlocked) {
+        msgText += `• 🏆 Bono Gamer Desbloqueado: *AOE-REMASTER30K* (-$30.000 COP en compras superiores a $100.000 COP)\n`;
+      }
+
+      msgText += `¿Me indican precio y disponibilidad para agendar?`;
+      document.getElementById('upg-wa-btn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msgText)}`;
     }
 
     function sendServiceWA(nombrePlan) {
-      const msg = encodeURIComponent(`Hola REMASTER TEC! Me interesa el servicio de *${nombrePlan}* para repotenciar mi computador. ¿Me ayudan con la cotización?`);
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
+      let msgText = `Hola REMASTER TEC! Me interesa el servicio de *${nombrePlan}* para repotenciar mi computador.`;
+      if (aoeUnlocked) {
+        msgText += ` 🏆 Tengo activo el Bono Gamer *AOE-REMASTER30K* (-$30.000 COP en compras mayores a $100.000 COP).`;
+      }
+      msgText += ` ¿Me ayudan con la cotización?`;
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msgText)}`, '_blank');
     }
 
-    function downloadLogoPNG(version) {
-      const svgHorizontal = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 120" width="1080" height="240">
-        <defs>
-          <linearGradient id="g1" x1="0%" y1="100%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#0B0F17"/><stop offset="45%" stop-color="#334155"/><stop offset="75%" stop-color="#059669"/><stop offset="100%" stop-color="#10B981"/>
-          </linearGradient>
-          <linearGradient id="g2" x1="0%" y1="100%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#475569"/><stop offset="50%" stop-color="#94A3B8"/><stop offset="100%" stop-color="#34D399"/>
-          </linearGradient>
-        </defs>
-        <rect width="540" height="120" rx="20" fill="#0B0F17"/>
-        <g transform="translate(14, 10)">
-          <rect x="0" y="0" width="100" height="100" rx="22" fill="url(#g1)" stroke="url(#g2)" stroke-width="3"/>
-          <path d="M32 34 L48 18 L66 34" fill="none" stroke="#ECFDF5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M74 46 L82 64 L60 78" fill="none" stroke="#ECFDF5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M44 78 L20 66 L26 46" fill="none" stroke="#CBD5E1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-          <rect x="36" y="36" width="28" height="28" rx="6" fill="#0F172A" stroke="#CBD5E1" stroke-width="2.5"/>
-          <path d="M41 50 H45 L48 43 L52 57 L55 50 H59" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </g>
-        <text x="132" y="68" font-family="Arial, sans-serif" font-weight="800" font-size="42" fill="#F8FAFC">
-          REMASTER T<tspan font-family="Georgia, serif" font-style="italic" font-weight="900" font-size="46" fill="#10B981">E</tspan><tspan font-family="Georgia, serif" font-style="italic" font-weight="900" font-size="46" fill="#E11D48">C</tspan>
-        </text>
-        <text x="134" y="96" font-family="monospace" font-weight="600" font-size="12" fill="#94A3B8" letter-spacing="3">HARDWARE GRADO A • BOGOTÁ</text>
-      </svg>`;
-
-      const svgVertical = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 260" width="720" height="520">
-        <defs>
-          <linearGradient id="gv1" x1="0%" y1="100%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#0B0F17"/><stop offset="45%" stop-color="#334155"/><stop offset="75%" stop-color="#059669"/><stop offset="100%" stop-color="#10B981"/>
-          </linearGradient>
-        </defs>
-        <rect width="360" height="260" rx="24" fill="#0B0F17"/>
-        <g transform="translate(125, 22) scale(1.1)">
-          <rect x="0" y="0" width="100" height="100" rx="22" fill="url(#gv1)" stroke="#94A3B8" stroke-width="3"/>
-          <path d="M32 34 L48 18 L66 34" fill="none" stroke="#ECFDF5" stroke-width="4" stroke-linecap="round"/>
-          <path d="M74 46 L82 64 L60 78" fill="none" stroke="#ECFDF5" stroke-width="4" stroke-linecap="round"/>
-          <path d="M44 78 L20 66 L26 46" fill="none" stroke="#CBD5E1" stroke-width="4" stroke-linecap="round"/>
-          <rect x="36" y="36" width="28" height="28" rx="6" fill="#0F172A" stroke="#CBD5E1" stroke-width="2.5"/>
-          <path d="M41 50 H45 L48 43 L52 57 L55 50 H59" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round"/>
-        </g>
-        <text x="180" y="192" text-anchor="middle" font-family="Arial, sans-serif" font-weight="800" font-size="33" fill="#F8FAFC">
-          REMASTER T<tspan font-family="Georgia, serif" font-style="italic" font-weight="900" font-size="37" fill="#10B981">E</tspan><tspan font-family="Georgia, serif" font-style="italic" font-weight="900" font-size="37" fill="#E11D48">C</tspan>
-        </text>
-        <text x="180" y="225" text-anchor="middle" font-family="monospace" font-weight="600" font-size="11" fill="#94A3B8" letter-spacing="2.5">TECNOLOGÍA CIRCULAR GRADO A</text>
-      </svg>`;
-
-      const svgData = version === 'vertical' ? svgVertical : svgHorizontal;
-      const canvas = document.getElementById('logo-export-canvas');
-      const ctx = canvas.getContext('2d');
-      const img = new Image();
-      const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
-      const url = URL.createObjectURL(svgBlob);
-
-      img.onload = function() {
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(img, 0, 0);
-        URL.revokeObjectURL(url);
-        const a = document.createElement('a');
-        a.download = `REMASTER-TEC-logo-${version}.png`;
-        a.href = canvas.toDataURL('image/png');
-        a.click();
-      };
-      img.src = url;
-    }
-
+    // Inicia la carga de productos al abrir la página
     cargarInventario();
   </script>
 </body>
