@@ -7,10 +7,10 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Librería PapaParse para conexión en tiempo real con Google Sheets -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-  <!-- Tipografías Oficiales del Manual de Marca REMASTER TEC -->
+  <!-- Tipografías Oficiales + Tipografía Cursiva para el "EC" del Logo -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,700;1,800;1,900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
 
   <script>
     tailwind.config = {
@@ -20,18 +20,21 @@
             brand: {
               carbon: '#0B0F17',
               slate: '#1E293B',
+              metal: '#64748B',
+              metalLight: '#94A3B8',
               emerald: '#10B981',
               emeraldDark: '#059669',
               mint: '#34D399',
-              amber: '#F59E0B',
-              surface: '#F8FAFC',
-              ecoBg: '#ECFDF5'
+              ruby: '#E11D48',
+              rubyDark: '#BE123C',
+              surface: '#F4F5F7'
             }
           },
           fontFamily: {
             display: ['"Space Grotesk"', 'sans-serif'],
             sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace']
+            mono: ['"JetBrains Mono"', 'monospace'],
+            ecItalic: ['"Playfair Display"', 'Georgia', 'serif']
           }
         }
       }
@@ -41,98 +44,164 @@
   <style>
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #F8FAFC;
+      background-color: #F4F5F7;
       color: #0F172A;
     }
 
-    /* Textura Matriz Técnica REMASTER TEC */
-    .bg-tech-grid {
-      background-color: #F8FAFC;
-      background-image: radial-gradient(#CBD5E1 1.1px, transparent 1.1px);
-      background-size: 20px 20px;
+    /* Fondo Técnico Estilo Framework (Cuadrícula de Ingeniería Sutil) */
+    .bg-framework-grid {
+      background-color: #F4F5F7;
+      background-image: 
+        linear-gradient(to right, rgba(148, 163, 184, 0.14) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(148, 163, 184, 0.14) 1px, transparent 1px);
+      background-size: 32px 32px;
     }
 
-    /* Textura Carbon Mesh con Resplandor Esmeralda */
+    /* Fondo Carbon Metálico con Acentos Esmeralda y Rubí */
     .bg-carbon-glow {
       background-color: #0B0F17;
       background-image: 
-        radial-gradient(circle at 88% 20%, rgba(16, 185, 129, 0.18), transparent 42%),
-        radial-gradient(circle at 12% 80%, rgba(52, 211, 153, 0.10), transparent 35%),
-        linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
-      background-size: 100% 100%, 100% 100%, 28px 28px, 28px 28px;
+        radial-gradient(circle at 88% 18%, rgba(16, 185, 129, 0.20), transparent 42%),
+        radial-gradient(circle at 12% 85%, rgba(225, 29, 72, 0.12), transparent 38%),
+        linear-gradient(135deg, #0B0F17 0%, #1E293B 100%);
     }
 
-    /* Tarjetas interactivas */
-    .remaster-card {
+    /* Tarjeta Estilo Framework (Shop All Modular) */
+    .framework-card {
       background: #FFFFFF;
-      border: 1px solid #E2E8F0;
-      box-shadow: 0 6px 20px -4px rgba(11, 15, 23, 0.05);
-      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1.5px solid #CBD5E1;
+      box-shadow: 0 4px 12px rgba(11, 15, 23, 0.04);
+      transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
     }
-    .remaster-card:hover {
-      transform: translateY(-4px);
+    .framework-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #334155 0%, #10B981 75%, #E11D48 100%);
+      opacity: 0;
+      transition: opacity 0.24s ease;
+    }
+    .framework-card:hover {
+      transform: translateY(-5px);
       border-color: #10B981;
-      box-shadow: 0 18px 32px -8px rgba(16, 185, 129, 0.16);
+      box-shadow: 0 20px 38px -10px rgba(11, 15, 23, 0.14);
+    }
+    .framework-card:hover::before {
+      opacity: 1;
     }
 
-    /* Animación del Modal Emergente */
-    @keyframes modalPop {
-      0% { opacity: 0; transform: scale(0.95) translateY(10px); }
+    /* Animación del Modal Emergente de Características */
+    @keyframes modalSlideUp {
+      0% { opacity: 0; transform: scale(0.94) translateY(24px); }
       100% { opacity: 1; transform: scale(1) translateY(0); }
     }
-    .animate-modal {
-      animation: modalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    .animate-modal-sheet {
+      animation: modalSlideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Animación Escalonada para cada Característica al Emerger */
+    @keyframes specEmerge {
+      0% { opacity: 0; transform: translateX(18px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+    .spec-item-emerge {
+      opacity: 0;
+      animation: specEmerge 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Estilo de las letras "EC" en Cursiva */
+    .ec-emerald {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-weight: 900;
+      color: #10B981;
+      padding-right: 1px;
+    }
+    .ec-ruby {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-weight: 900;
+      color: #E11D48;
     }
   </style>
 </head>
-<body class="bg-tech-grid antialiased selection:bg-brand-emerald selection:text-white flex flex-col min-h-screen">
+<body class="bg-framework-grid antialiased selection:bg-brand-emerald selection:text-white flex flex-col min-h-screen">
 
-  <!-- BARRA SUPERIOR ULTRA-COMPACTA -->
+  <!-- BARRA TÉCNICA SUPERIOR -->
   <div class="bg-brand-carbon text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
       <div class="flex items-center gap-2">
         <span class="inline-block w-2 h-2 rounded-full bg-brand-emerald animate-pulse"></span>
-        <span class="font-mono text-[11px] uppercase tracking-wider text-brand-mint font-bold">BOGOTÁ D.C. • INVENTARIO EN VIVO</span>
-        <span class="hidden md:inline text-slate-500">|</span>
-        <span class="hidden md:inline">Calidad empresarial Grado A superior a equipos nuevos de almacén • Garantía por escrito</span>
+        <span class="font-mono text-[11px] uppercase tracking-wider text-brand-mint font-bold">BOGOTÁ D.C. • CATÁLOGO EN VIVO</span>
+        <span class="hidden md:inline text-slate-600">|</span>
+        <span class="hidden md:inline">Ingeniería corporativa Grado A • Haz clic en cualquier equipo para desplegar su ficha interactiva</span>
       </div>
       <div class="flex items-center gap-3 font-mono text-[11px]">
-        <span class="text-emerald-400">🌱 -1.8 kg E-Waste por equipo</span>
-        <span class="hidden sm:inline text-slate-600">|</span>
-        <span class="hidden sm:inline text-slate-300">WhatsApp: +57 302 773 0460</span>
+        <span class="text-emerald-400">♻️ -1.8 kg E-Waste</span>
+        <span class="text-slate-600">|</span>
+        <span class="text-slate-200">WhatsApp: <strong class="text-brand-mint">+57 302 773 0460</strong></span>
       </div>
     </div>
   </div>
 
-  <!-- NAVBAR PRINCIPAL CON PESTAÑAS DE NAVEGACIÓN -->
-  <nav class="sticky top-0 z-40 bg-brand-carbon/95 backdrop-blur-md border-b border-slate-800 text-white shadow-lg">
+  <!-- NAVBAR PRINCIPAL CON NUEVO LOGO HORIZONTAL REMASTER TEC -->
+  <nav class="sticky top-0 z-40 bg-brand-carbon/95 backdrop-blur-md border-b border-slate-800 text-white shadow-xl">
     <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
       
-      <!-- Logo Oficial REMASTER TEC -->
-      <a href="#" onclick="switchMainTab('equipos'); return false;" class="flex items-center gap-3 group">
-        <svg class="w-10 h-10 shrink-0 transition-transform group-hover:scale-105" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="64" height="64" rx="14" fill="#1E293B"/>
-          <rect x="2" y="2" width="60" height="60" rx="12" stroke="#10B981" stroke-opacity="0.4" stroke-width="1.5"/>
-          <path d="M24 10V16M32 10V16M40 10V16M24 48V54M32 48V54M40 48V54M10 24H16M10 32H16M10 40H16M48 24H54M48 32H54M48 40H54" stroke="#34D399" stroke-width="2.5" stroke-linecap="round"/>
-          <rect x="16" y="16" width="32" height="32" rx="7" fill="#0B0F17" stroke="#10B981" stroke-width="2.5"/>
-          <path d="M24 40V24H33C36.3137 24 39 26.6863 39 30C39 33.3137 36.3137 36 33 36H24" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M32 36L39 41" stroke="#34D399" stroke-width="3" stroke-linecap="round"/>
-          <path d="M36 22C40.5 22 43 25.5 41 30C38 29.5 35.5 26.5 36 22Z" fill="#10B981"/>
+      <!-- LOGOTIPO OFICIAL HORIZONTAL -->
+      <a href="#" onclick="switchMainTab('equipos'); return false;" class="flex items-center gap-3.5 group">
+        <svg class="w-12 h-12 shrink-0 transition-transform duration-300 group-hover:scale-105" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="navLogoBg" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#111827"/>
+              <stop offset="45%" stop-color="#334155"/>
+              <stop offset="78%" stop-color="#059669"/>
+              <stop offset="100%" stop-color="#10B981"/>
+            </linearGradient>
+            <linearGradient id="navMetalStroke" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#475569"/>
+              <stop offset="50%" stop-color="#94A3B8"/>
+              <stop offset="100%" stop-color="#34D399"/>
+            </linearGradient>
+            <linearGradient id="navChipMetal" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#E2E8F0"/>
+              <stop offset="50%" stop-color="#94A3B8"/>
+              <stop offset="100%" stop-color="#475569"/>
+            </linearGradient>
+          </defs>
+          <rect x="2" y="2" width="96" height="96" rx="22" fill="url(#navLogoBg)" stroke="url(#navMetalStroke)" stroke-width="3"/>
+          <path d="M10 74 L26 90 M15 86 L21 92 M83 13 L90 20" stroke="#94A3B8" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
+          <path d="M32 34 L48 18 L66 34" stroke="#ECFDF5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="60,35 67,35 67,28" stroke="#34D399" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="32" cy="34" r="3.2" fill="#94A3B8"/>
+          <path d="M74 46 L82 64 L60 78" stroke="#ECFDF5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="65,81 58,78 61,71" stroke="#34D399" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="74" cy="46" r="3.2" fill="#34D399"/>
+          <path d="M44 78 L20 66 L26 46" stroke="#CBD5E1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="20,50 26,44 31,50" stroke="#94A3B8" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="44" cy="78" r="3.2" fill="#E11D48"/>
+          <path d="M42 30V36 M50 30V36 M58 30V36 M42 64V70 M50 64V70 M58 64V70 M30 42H36 M30 50H36 M30 58H36 M64 42H70 M64 50H70 M64 58H70" stroke="url(#navChipMetal)" stroke-width="2.4" stroke-linecap="round"/>
+          <rect x="36" y="36" width="28" height="28" rx="6" fill="#0B0F17" stroke="url(#navChipMetal)" stroke-width="2.4"/>
+          <path d="M41 50 H45 L48 43 L52 57 L55 50 H59" stroke="#10B981" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
+
         <div>
-          <div class="font-display font-bold text-xl tracking-tight leading-none flex items-center gap-1">
-            <span>REMASTER</span>
-            <span class="text-brand-emerald">TEC</span>
+          <div class="font-display font-extrabold text-xl sm:text-2xl tracking-tight leading-none flex items-baseline">
+            <span class="text-white">REMASTER&nbsp;T</span><span class="ec-emerald text-2xl sm:text-[27px]">E</span><span class="ec-ruby text-2xl sm:text-[27px]">C</span>
           </div>
-          <span class="font-mono text-[10px] tracking-widest uppercase text-slate-400 block mt-1">
-            Hardware Grado A & Lab
-          </span>
+          <div class="flex items-center gap-1.5 mt-1">
+            <span class="font-mono text-[10px] tracking-widest uppercase text-slate-400">Hardware Grado A & Lab</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-ruby"></span>
+          </div>
         </div>
       </a>
 
-      <!-- Selector de 3 Pestañas Principales -->
-      <div class="flex flex-wrap items-center bg-slate-900/90 p-1.5 rounded-xl border border-slate-800 gap-1">
+      <!-- Menú Rápido de 3 Pestañas Principales -->
+      <div class="flex flex-wrap items-center bg-slate-900/95 p-1.5 rounded-xl border border-slate-700/80 gap-1">
         <button id="nav-equipos" onclick="switchMainTab('equipos')" class="px-4 py-2 rounded-lg text-xs sm:text-sm font-display font-bold transition flex items-center gap-2 bg-brand-emerald text-brand-carbon shadow-sm">
           <span>💻</span> Equipos Grado A
         </button>
@@ -146,36 +215,36 @@
 
       <!-- Botón VIP WhatsApp -->
       <a id="vip-btn" href="#" target="_blank"
-         class="hidden xl:flex bg-slate-800 hover:bg-brand-emerald text-white hover:text-brand-carbon border border-slate-700 font-display font-bold px-4 py-2 rounded-xl text-xs transition items-center gap-2">
-        <span>🔔 Lista VIP de Lotes</span>
+         class="hidden xl:flex bg-slate-800 hover:bg-brand-emerald text-white hover:text-brand-carbon border border-slate-600 font-display font-bold px-4 py-2 rounded-xl text-xs transition items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-brand-ruby"></span>
+        <span>Alertas VIP de Lotes</span>
       </a>
     </div>
   </nav>
 
-  <!-- BANNER HERO COMPACTO -->
+  <!-- BANNER TÉCNICO COMPACTO -->
   <header class="bg-carbon-glow text-white border-b border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 py-6">
+    <div class="max-w-7xl mx-auto px-4 py-5">
       <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div class="space-y-1">
           <div class="inline-flex items-center gap-2 text-brand-mint font-mono text-xs">
-            <span>⚡ POTENCIA EMPRESARIAL SIN SOBREPRECIO</span>
-            <span>•</span>
-            <span>HAZ CLIC EN CUALQUIER PRODUCTO PARA VER SUS FOTOS EN DETALLE</span>
+            <span class="bg-brand-ruby text-white px-2 py-0.5 rounded font-bold text-[10px]">INTERACTIVO</span>
+            <span>HAZ CLIC EN CUALQUIER PRODUCTO PARA DESPLEGAR SUS CARACTERÍSTICAS A DETALLE</span>
           </div>
           <h1 class="font-display text-2xl sm:text-3xl font-bold tracking-tight">
-            Más rápidos y resistentes que un equipo comercial nuevo. <span class="text-brand-emerald">40% más económicos.</span>
+            Potencia empresarial verificada. <span class="text-brand-emerald">Hasta 40% menos que en almacén.</span>
           </h1>
         </div>
 
         <div class="flex flex-wrap gap-2 text-xs font-mono">
           <div class="bg-slate-900/90 border border-slate-700 px-3 py-2 rounded-xl flex items-center gap-1.5">
-            <span class="text-brand-emerald">✓</span> Chasis Militar Grado A
+            <span class="text-brand-emerald">■</span> Chasis Metálico Militar
           </div>
           <div class="bg-slate-900/90 border border-slate-700 px-3 py-2 rounded-xl flex items-center gap-1.5">
-            <span class="text-brand-emerald">✓</span> SSD NVMe + RAM Auditada
+            <span class="text-brand-emerald">■</span> SSD NVMe + RAM Auditada
           </div>
-          <div class="bg-emerald-950/70 border border-emerald-500/40 text-brand-mint px-3 py-2 rounded-xl flex items-center gap-1.5">
-            <span>♻️</span> Tecnología Circular Sostenible
+          <div class="bg-slate-900/90 border border-rose-500/40 text-rose-300 px-3 py-2 rounded-xl flex items-center gap-1.5">
+            <span class="text-brand-ruby">●</span> Garantía Funcional por Escrito
           </div>
         </div>
       </div>
@@ -187,8 +256,8 @@
   <!-- ======================================================================= -->
   <main id="section-equipos" class="max-w-7xl mx-auto px-4 py-7 flex-grow w-full">
     
-    <!-- Barra de Filtros y Buscador Rápido -->
-    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm">
+    <!-- Menú Rápido de Categorías -->
+    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6 bg-white p-3.5 rounded-2xl border border-slate-300 shadow-sm">
       <div class="flex flex-wrap gap-1.5" id="filter-buttons">
         <button onclick="filterItems('todos', this)" class="filter-btn bg-brand-carbon text-white px-3.5 py-2 rounded-xl text-xs font-display font-bold transition">
           Todos los Equipos
@@ -207,20 +276,20 @@
         </button>
       </div>
 
-      <!-- Buscador instantáneo en PC -->
+      <!-- Buscador instantáneo -->
       <div class="relative w-full lg:w-72">
-        <input id="search-input" type="text" oninput="handleSearch()" placeholder="Buscar referencia, marca o característica..."
-               class="w-full pl-9 pr-4 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-emerald font-sans">
+        <input id="search-input" type="text" oninput="handleSearch()" placeholder="Buscar referencia, procesador, RAM..."
+               class="w-full pl-9 pr-4 py-2 text-xs bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-brand-emerald font-sans">
         <span class="absolute left-3 top-2.5 text-slate-400 text-xs">🔍</span>
       </div>
     </div>
 
-    <!-- Indicador de carga -->
+    <!-- Estado de Carga -->
     <div id="loading" class="text-center py-14 font-mono text-slate-500 text-sm">
-      Cargando inventario en tiempo real desde Google Sheets...
+      Sincronizando catálogo en tiempo real desde Google Sheets...
     </div>
 
-    <!-- Grilla Optimizada: 4 Columnas en Pantallas de PC -->
+    <!-- Grilla Modular Estilo Framework -->
     <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"></div>
   </main>
 
@@ -233,7 +302,7 @@
         <span class="font-mono text-xs text-brand-mint uppercase tracking-wider">Complementos Oficiales REMASTER TEC</span>
         <h2 class="font-display text-2xl font-bold mt-1">Accesorios de Refrigeración, Memorias USB y Micro SD</h2>
         <p class="text-slate-300 text-xs sm:text-sm mt-1">
-          Inventario sincronizado en tiempo real desde nuestra base de datos. Haz clic en cualquier accesorio para ampliar sus fotos.
+          Haz clic en cualquier accesorio para emerger su ficha completa de características y fotos.
         </p>
       </div>
       <div class="flex flex-wrap gap-2 shrink-0">
@@ -244,7 +313,6 @@
       </div>
     </div>
 
-    <!-- Grilla de Accesorios (4 columnas en PC, cargada 100% desde Google Sheets) -->
     <div id="accesorios-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"></div>
   </section>
 
@@ -252,36 +320,35 @@
   <!-- PESTAÑA 3: LABORATORIO DE OPTIMIZACIÓN (UPGRADE RAM & SSD)              -->
   <!-- ======================================================================= -->
   <section id="section-servicios" class="hidden max-w-7xl mx-auto px-4 py-7 flex-grow w-full">
-    
     <div class="bg-carbon-glow text-white rounded-3xl p-6 sm:p-10 mb-8 border border-slate-800">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         <div class="lg:col-span-7 space-y-4">
           <span class="inline-block bg-emerald-950 border border-emerald-500/40 text-brand-mint font-mono text-xs px-3.5 py-1.5 rounded-full">
-            🛠️ REMASTER LAB BOGOTÁ • REPONTENCIACIÓN DE EQUIPOS
+            🛠️ REMASTER LAB BOGOTÁ • REPOTENCIACIÓN DE HARDWARE
           </span>
           <h2 class="font-display text-3xl sm:text-4xl font-bold leading-tight">
             Multiplica la velocidad de tu computador actual con <span class="text-brand-emerald">Disco Sólido SSD y Memoria RAM</span>.
           </h2>
           <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-            No necesitas gastar millones en un computador nuevo si el tuyo se volvió lento. Reemplazar el disco mecánico por una unidad de estado sólido (SSD) y ampliar la memoria RAM devuelve la velocidad total a tu equipo y cuida el medio ambiente evitando desechos electrónicos.
+            Reemplazar el disco mecánico por una unidad de estado sólido (SSD) y ampliar la memoria RAM devuelve la velocidad total a tu equipo y cuida el medio ambiente evitando desechos electrónicos.
           </p>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-            <div class="bg-slate-900/90 border border-slate-800 p-3.5 rounded-2xl">
+            <div class="bg-slate-900/90 border border-slate-700 p-3.5 rounded-2xl">
               <div class="font-mono text-brand-emerald text-lg font-bold">Arranque Flash</div>
               <div class="text-xs text-slate-400">Encendido en segundos con unidades SSD</div>
             </div>
-            <div class="bg-slate-900/90 border border-slate-800 p-3.5 rounded-2xl">
+            <div class="bg-slate-900/90 border border-slate-700 p-3.5 rounded-2xl">
               <div class="font-mono text-brand-emerald text-lg font-bold">Multitarea Real</div>
               <div class="text-xs text-slate-400">Ampliación de RAM DDR3L / DDR4 / DDR5</div>
             </div>
-            <div class="bg-slate-900/90 border border-slate-800 p-3.5 rounded-2xl">
-              <div class="font-mono text-brand-emerald text-lg font-bold">Datos Seguros</div>
+            <div class="bg-slate-900/90 border border-rose-500/40 p-3.5 rounded-2xl">
+              <div class="font-mono text-rose-400 text-lg font-bold">Datos Seguros</div>
               <div class="text-xs text-slate-400">Instalación conservando tu información</div>
             </div>
           </div>
         </div>
 
-        <!-- Simulador / Solicitud de Cotización de Repotenciación -->
+        <!-- Configurador de Optimización -->
         <div class="lg:col-span-5 bg-slate-900/95 border border-emerald-500/40 rounded-2xl p-6 shadow-2xl">
           <div class="font-mono text-xs text-brand-mint uppercase font-bold mb-1">⚡ Configurador de Optimización</div>
           <h3 class="font-display text-xl font-bold text-white mb-4">Selecciona las mejoras para tu equipo</h3>
@@ -331,19 +398,18 @@
       </div>
     </div>
 
-    <!-- Tarjetas de Servicios de Optimización -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="remaster-card rounded-2xl p-6 flex flex-col justify-between">
+      <div class="framework-card rounded-2xl p-6 flex flex-col justify-between">
         <div>
           <span class="bg-emerald-100 text-emerald-900 font-mono text-xs font-bold px-3 py-1 rounded-full">UPGRADE ALMACENAMIENTO</span>
           <h4 class="font-display text-xl font-bold text-brand-carbon mt-3">Instalación de Disco Duro de Estado Sólido (SSD)</h4>
           <p class="text-xs text-slate-600 mt-2">
             Reemplazamos tu disco duro tradicional lento por tecnología de estado sólido SATA o NVMe M.2 de alta velocidad.
           </p>
-          <ul class="mt-4 space-y-2 text-xs text-slate-600 border-t border-slate-100 pt-3">
-            <li>✓ Encendido del sistema en pocos segundos</li>
-            <li>✓ Apertura instantánea de programas de oficina y estudio</li>
-            <li>✓ Mayor resistencia a golpes y menor consumo de batería</li>
+          <ul class="mt-4 space-y-2 text-xs text-slate-600 border-t border-slate-200 pt-3">
+            <li><span class="text-brand-emerald font-bold">▸</span> Encendido del sistema en pocos segundos</li>
+            <li><span class="text-brand-emerald font-bold">▸</span> Apertura instantánea de programas</li>
+            <li><span class="text-brand-emerald font-bold">▸</span> Mayor resistencia y menor consumo de batería</li>
           </ul>
         </div>
         <a href="#" onclick="sendServiceWA('Instalación de Disco de Estado Sólido (SSD)'); return false;"
@@ -352,17 +418,17 @@
         </a>
       </div>
 
-      <div class="remaster-card rounded-2xl p-6 flex flex-col justify-between">
+      <div class="framework-card rounded-2xl p-6 flex flex-col justify-between">
         <div>
           <span class="bg-emerald-100 text-emerald-900 font-mono text-xs font-bold px-3 py-1 rounded-full">UPGRADE MULTITAREA</span>
           <h4 class="font-display text-xl font-bold text-brand-carbon mt-3">Ampliación de Memoria RAM</h4>
           <p class="text-xs text-slate-600 mt-2">
             Aumentamos la capacidad de memoria RAM de tu portátil o PC de escritorio para evitar bloqueos cuando tienes varios programas abiertos.
           </p>
-          <ul class="mt-4 space-y-2 text-xs text-slate-600 border-t border-slate-100 pt-3">
-            <li>✓ Módulos verificados y compatibles con tu placa base</li>
-            <li>✓ Configuración en Dual-Channel para máximo rendimiento</li>
-            <li>✓ Pruebas de estabilidad incluidas</li>
+          <ul class="mt-4 space-y-2 text-xs text-slate-600 border-t border-slate-200 pt-3">
+            <li><span class="text-brand-emerald font-bold">▸</span> Módulos verificados y compatibles</li>
+            <li><span class="text-brand-emerald font-bold">▸</span> Configuración en Dual-Channel</li>
+            <li><span class="text-brand-emerald font-bold">▸</span> Pruebas de estabilidad incluidas</li>
           </ul>
         </div>
         <a href="#" onclick="sendServiceWA('Ampliación de Memoria RAM'); return false;"
@@ -371,17 +437,17 @@
         </a>
       </div>
 
-      <div class="remaster-card rounded-2xl p-6 flex flex-col justify-between border-2 border-brand-emerald">
+      <div class="framework-card rounded-2xl p-6 flex flex-col justify-between border-2 border-brand-emerald">
         <div>
-          <span class="bg-brand-carbon text-brand-mint font-mono text-xs font-bold px-3 py-1 rounded-full">REPOTENCIACIÓN COMPLETA</span>
+          <span class="bg-brand-ruby text-white font-mono text-xs font-bold px-3 py-1 rounded-full">REPOTENCIACIÓN TOTAL</span>
           <h4 class="font-display text-xl font-bold text-brand-carbon mt-3">Combo SSD + Memoria RAM + Mantenimiento</h4>
           <p class="text-xs text-slate-600 mt-2">
             La renovación total para darle años extra de vida útil a tu computador con el máximo desempeño.
           </p>
-          <ul class="mt-4 space-y-2 text-xs text-slate-600 border-t border-slate-100 pt-3">
-            <li>✓ Instalación de SSD + Ampliación de Memoria RAM</li>
-            <li>✓ Limpieza interna del sistema de enfriamiento</li>
-            <li>✓ Optimización completa del sistema operativo</li>
+          <ul class="mt-4 space-y-2 text-xs text-slate-600 border-t border-slate-200 pt-3">
+            <li><span class="text-brand-emerald font-bold">▸</span> Instalación de SSD + Ampliación de RAM</li>
+            <li><span class="text-brand-emerald font-bold">▸</span> Limpieza interna del sistema de enfriamiento</li>
+            <li><span class="text-brand-emerald font-bold">▸</span> Optimización completa del sistema operativo</li>
           </ul>
         </div>
         <a href="#" onclick="sendServiceWA('Combo Completo SSD + Memoria RAM + Mantenimiento'); return false;"
@@ -393,82 +459,108 @@
   </section>
 
   <!-- ======================================================================= -->
-  <!-- MODAL EMERGENTE INTERACTIVO DE GALERÍA DE FOTOS Y DETALLE DE PRODUCTO   -->
+  <!-- VISOR EMERGENTE DE FICHA TÉCNICA INTERACTIVA                            -->
   <!-- ======================================================================= -->
-  <div id="product-modal" class="fixed inset-0 z-50 hidden bg-brand-carbon/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto" onclick="closeModalOnBackdrop(event)">
-    <div class="bg-white border border-slate-200 rounded-3xl max-w-4xl w-full overflow-hidden shadow-2xl animate-modal my-auto" onclick="event.stopPropagation()">
+  <div id="product-modal" class="fixed inset-0 z-50 hidden bg-brand-carbon/85 backdrop-blur-md flex items-center justify-center p-2 sm:p-5 overflow-y-auto" onclick="closeModalOnBackdrop(event)">
+    <div class="bg-brand-carbon border-2 border-slate-700 rounded-3xl max-w-5xl w-full overflow-hidden shadow-2xl animate-modal-sheet my-auto text-white" onclick="event.stopPropagation()">
       
-      <!-- Barra Superior del Modal -->
-      <div class="bg-brand-carbon text-white px-5 py-3.5 flex items-center justify-between border-b border-slate-800">
-        <div class="flex items-center gap-2.5">
-          <span id="modal-badge" class="bg-brand-emerald text-brand-carbon font-mono text-[11px] font-bold px-2.5 py-0.5 rounded-full uppercase">Disponible</span>
-          <span id="modal-ref" class="font-mono text-xs text-slate-400">REF</span>
+      <!-- Barra Superior Metálica del Visor -->
+      <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 px-5 py-3.5 flex items-center justify-between border-b border-slate-700">
+        <div class="flex items-center gap-3">
+          <span class="inline-block w-2.5 h-2.5 rounded-full bg-brand-emerald"></span>
+          <span class="font-mono text-xs uppercase tracking-widest text-slate-300 font-bold">FICHA TÉCNICA INTERACTIVA</span>
+          <span class="text-slate-600">|</span>
+          <span id="modal-ref" class="font-mono text-xs text-brand-mint font-bold">REF</span>
+          <span id="modal-badge" class="bg-brand-emerald text-brand-carbon font-mono text-[10px] font-bold px-2.5 py-0.5 rounded uppercase">Disponible</span>
         </div>
-        <button onclick="closeProductModal()" class="text-slate-400 hover:text-white bg-slate-800 hover:bg-rose-600 w-8 h-8 rounded-full flex items-center justify-center font-bold transition" title="Cerrar (Esc)">
+        <button onclick="closeProductModal()" class="text-slate-300 hover:text-white bg-slate-800 hover:bg-brand-ruby w-8 h-8 rounded-lg flex items-center justify-center font-bold transition border border-slate-600" title="Cerrar (Esc)">
           ✕
         </button>
       </div>
 
-      <!-- Cuerpo del Modal -->
-      <div class="grid grid-cols-1 md:grid-cols-12">
+      <!-- Cuerpo Dividido -->
+      <div class="grid grid-cols-1 lg:grid-cols-12">
         
-        <!-- Columna de Fotos Reales -->
-        <div class="md:col-span-7 bg-slate-950 p-4 sm:p-6 flex flex-col justify-between relative">
-          <div class="relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 h-72 sm:h-96 flex items-center justify-center group">
-            <img id="modal-main-img" src="" alt="Foto del producto" class="w-full h-full object-contain bg-slate-950 transition duration-500 group-hover:scale-105">
-            
-            <button id="modal-prev-btn" onclick="changeModalPhoto(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-brand-carbon/80 hover:bg-brand-emerald text-white hover:text-brand-carbon w-9 h-9 rounded-full flex items-center justify-center font-bold transition shadow-lg">
-              ❮
-            </button>
-            <button id="modal-next-btn" onclick="changeModalPhoto(1)" class="absolute right-3 top-1/2 -translate-y-1/2 bg-brand-carbon/80 hover:bg-brand-emerald text-white hover:text-brand-carbon w-9 h-9 rounded-full flex items-center justify-center font-bold transition shadow-lg">
-              ❯
-            </button>
+        <!-- Izquierda: Galería y Auditoría -->
+        <div class="lg:col-span-6 bg-slate-950 p-5 sm:p-6 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-slate-800">
+          <div>
+            <div class="relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 h-72 sm:h-80 flex items-center justify-center group">
+              <img id="modal-main-img" src="" alt="Foto del producto" class="w-full h-full object-contain bg-slate-950 transition duration-500 group-hover:scale-105">
+              
+              <button id="modal-prev-btn" onclick="changeModalPhoto(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-brand-carbon/85 hover:bg-brand-emerald text-white hover:text-brand-carbon w-9 h-9 rounded-xl flex items-center justify-center font-bold transition border border-slate-700">
+                ❮
+              </button>
+              <button id="modal-next-btn" onclick="changeModalPhoto(1)" class="absolute right-3 top-1/2 -translate-y-1/2 bg-brand-carbon/85 hover:bg-brand-emerald text-white hover:text-brand-carbon w-9 h-9 rounded-xl flex items-center justify-center font-bold transition border border-slate-700">
+                ❯
+              </button>
 
-            <div id="modal-photo-counter" class="absolute bottom-3 left-3 bg-brand-carbon/85 text-brand-mint font-mono text-[11px] px-2.5 py-1 rounded-lg border border-slate-700">
-              Foto 1 / 1
+              <div id="modal-photo-counter" class="absolute bottom-3 left-3 bg-brand-carbon/90 text-brand-mint font-mono text-[11px] px-2.5 py-1 rounded-lg border border-slate-700">
+                Foto 1 / 1
+              </div>
             </div>
+
+            <div id="modal-thumbs" class="flex items-center gap-2.5 mt-3.5 overflow-x-auto pb-1"></div>
           </div>
 
-          <!-- Tira de Miniaturas Reales -->
-          <div id="modal-thumbs" class="flex items-center gap-2.5 mt-4 overflow-x-auto pb-1"></div>
+          <div class="mt-5 pt-4 border-t border-slate-800/80 grid grid-cols-3 gap-2.5 text-center">
+            <div class="bg-slate-900/90 border border-slate-800 p-2.5 rounded-xl">
+              <div class="font-mono text-[10px] text-slate-400 uppercase">ESTADO</div>
+              <div id="modal-grade" class="font-display font-bold text-xs text-brand-mint mt-0.5">Grado A</div>
+            </div>
+            <div class="bg-slate-900/90 border border-slate-800 p-2.5 rounded-xl">
+              <div class="font-mono text-[10px] text-slate-400 uppercase">AUDITORÍA</div>
+              <div class="font-display font-bold text-xs text-white mt-0.5">25 Puntos OK</div>
+            </div>
+            <div class="bg-slate-900/90 border border-slate-800 p-2.5 rounded-xl">
+              <div class="font-mono text-[10px] text-slate-400 uppercase">IMPACTO ECO</div>
+              <div class="font-display font-bold text-xs text-brand-emerald mt-0.5">-1.8kg E-Waste</div>
+            </div>
+          </div>
         </div>
 
-        <!-- Columna de Ficha Técnica -->
-        <div class="md:col-span-5 p-6 flex flex-col justify-between bg-white">
+        <!-- Derecha: Características Emergentes Animadas -->
+        <div class="lg:col-span-6 p-5 sm:p-7 flex flex-col justify-between bg-slate-900">
           <div>
-            <div class="inline-flex items-center gap-1.5 text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-lg text-xs font-mono mb-2">
-              <span>✓</span>
-              <span id="modal-grade">Verificado</span>
+            <div class="font-mono text-[11px] text-brand-mint uppercase tracking-wider mb-1">
+              ESPECIFICACIONES VERIFICADAS EN LABORATORIO
             </div>
+            <h3 id="modal-title" class="font-display text-xl sm:text-2xl font-bold text-white leading-snug"></h3>
 
-            <h3 id="modal-title" class="font-display text-xl sm:text-2xl font-bold text-brand-carbon leading-snug"></h3>
-
-            <div class="mt-4 p-3.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-baseline justify-between">
+            <div class="mt-4 p-4 rounded-2xl bg-slate-950 border border-slate-800 flex flex-wrap items-center justify-between gap-3">
               <div>
-                <span class="text-[11px] text-slate-500 block">Precio REMASTER TEC:</span>
-                <span id="modal-price" class="font-mono text-2xl sm:text-3xl font-bold text-brand-carbon"></span>
+                <span class="text-[11px] font-mono text-slate-400 uppercase block">Precio REMASTER TEC:</span>
+                <span id="modal-price" class="font-mono text-2xl sm:text-3xl font-bold text-brand-emerald"></span>
               </div>
               <div class="text-right">
-                <span class="text-[11px] text-slate-400 block">Referencia comercial:</span>
+                <span id="modal-discount-pill" class="hidden bg-brand-ruby text-white font-mono text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase mb-1 inline-block">
+                  AHORRO CERTIFICADO
+                </span>
+                <span class="text-[11px] font-mono text-slate-500 block">En almacén comercial:</span>
                 <span id="modal-old-price" class="font-mono text-sm text-slate-400 line-through"></span>
               </div>
             </div>
 
-            <div class="mt-4">
-              <h4 class="font-mono text-xs font-bold uppercase text-slate-400 mb-2">Especificaciones & Detalles:</h4>
-              <ul id="modal-specs" class="space-y-2 text-xs sm:text-sm text-slate-700"></ul>
+            <div class="mt-5">
+              <div class="flex items-center justify-between mb-3">
+                <h4 class="font-mono text-xs font-bold uppercase text-slate-300 flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-brand-emerald"></span>
+                  <span>Características del Producto:</span>
+                </h4>
+                <span class="font-mono text-[10px] text-slate-400">100% TESTEADO</span>
+              </div>
+
+              <div id="modal-specs" class="space-y-2.5 max-h-64 overflow-y-auto pr-1"></div>
             </div>
           </div>
 
-          <div class="mt-6 pt-4 border-t border-slate-100 space-y-2">
-            <div class="text-[11px] text-emerald-800 bg-emerald-50/80 px-3 py-1.5 rounded-lg font-medium flex items-center justify-between">
-              <span>🌱 Compra Sostenible</span>
-              <span>Garantía Funcional</span>
-            </div>
+          <div class="mt-6 pt-4 border-t border-slate-800 space-y-2.5">
             <a id="modal-wa-btn" href="#" target="_blank"
-               class="block w-full bg-brand-emerald hover:bg-brand-emeraldDark text-brand-carbon font-display font-bold py-3.5 rounded-xl text-sm text-center transition shadow-md">
-              💬 Apartar o Pedir Información por WhatsApp
+               class="block w-full bg-brand-emerald hover:bg-brand-emeraldDark text-brand-carbon font-display font-bold py-3.5 rounded-xl text-sm text-center transition shadow-lg">
+              💬 Apartar o Pedir Video de Funcionamiento por WhatsApp
             </a>
+            <button onclick="closeProductModal()" class="block w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-mono text-xs py-2.5 rounded-xl text-center transition">
+              ← Volver al catálogo
+            </button>
           </div>
         </div>
 
@@ -476,26 +568,56 @@
     </div>
   </div>
 
-  <!-- FOOTER COMPACTO -->
+  <!-- FOOTER -->
   <footer class="bg-brand-carbon text-slate-400 border-t border-slate-800 mt-14">
-    <div class="max-w-7xl mx-auto px-4 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
-      <div class="flex items-center gap-2">
-        <span class="font-display font-bold text-white">REMASTER <span class="text-brand-emerald">TEC</span></span>
-        <span>— Tecnología Empresarial Grado A, Accesorios & Laboratorio de Optimización.</span>
+    <div class="max-w-7xl mx-auto px-4 py-10">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-slate-800/80">
+        
+        <div class="flex items-center gap-4">
+          <svg class="w-14 h-14 shrink-0" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="96" height="96" rx="22" fill="url(#navLogoBg)" stroke="url(#navMetalStroke)" stroke-width="3"/>
+            <path d="M10 74 L26 90 M15 86 L21 92 M83 13 L90 20" stroke="#94A3B8" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
+            <path d="M32 34 L48 18 L66 34" stroke="#ECFDF5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="60,35 67,35 67,28" stroke="#34D399" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M74 46 L82 64 L60 78" stroke="#ECFDF5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="65,81 58,78 61,71" stroke="#34D399" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M44 78 L20 66 L26 46" stroke="#CBD5E1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="20,50 26,44 31,50" stroke="#94A3B8" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="36" y="36" width="28" height="28" rx="6" fill="#0B0F17" stroke="url(#navChipMetal)" stroke-width="2.4"/>
+            <path d="M41 50 H45 L48 43 L52 57 L55 50 H59" stroke="#10B981" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div>
+            <div class="font-display font-extrabold text-xl text-white tracking-tight">
+              REMASTER T<span class="ec-emerald text-2xl">E</span><span class="ec-ruby text-2xl">C</span>
+            </div>
+            <p class="text-xs text-slate-400 mt-0.5">
+              Tecnología Empresarial Reacondicionada Grado A, Accesorios & Laboratorio de Optimización.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="downloadLogoPNG('horizontal')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 px-3 py-2 rounded-xl font-mono text-[11px] transition">
+            ⬇ Logo Horizontal (PNG)
+          </button>
+          <button onclick="downloadLogoPNG('vertical')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 px-3 py-2 rounded-xl font-mono text-[11px] transition">
+            ⬇ Logo Emblema Vertical (PNG)
+          </button>
+        </div>
       </div>
-      <div class="font-mono text-slate-400">
-        WhatsApp: +57 302 773 0460 • Bogotá, Colombia
+
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-slate-500 gap-2">
+        <span>© 2026 REMASTER TEC • Bogotá, Colombia</span>
+        <span>WhatsApp Oficial: +57 302 773 0460</span>
       </div>
     </div>
   </footer>
 
+  <canvas id="logo-export-canvas" class="hidden"></canvas>
+
   <script>
-    // =========================================================================
-    // CONFIGURACIÓN OFICIAL DE PRODUCCIÓN — REMASTER TEC
-    // =========================================================================
     const WHATSAPP_NUMBER = "573027730460";
     const GOOGLE_SHEETS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTIyBLNtltWSTLYcEM1mXe9wHyewkBiL87GXj1g9TH3Kz5CJlTRmhH9UV8NE54bpbUBCRrlf-sPElls/pub?output=csv";
-    // =========================================================================
 
     document.getElementById('vip-btn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola REMASTER TEC! Quiero unirme a la lista VIP para recibir alertas de nuevos lotes en Bogotá.')}`;
 
@@ -504,10 +626,8 @@
     let modalPhotos = [];
     let currentPhotoIdx = 0;
 
-    // Categorías que pertenecen a la pestaña de Accesorios
     const CATEGORIAS_ACCESORIOS = ['accesorios', 'refrigeracion', 'usb', 'microsd'];
 
-    // Carga exclusivamente los datos reales del archivo de Google Sheets
     function cargarInventario() {
       const loadingEl = document.getElementById('loading');
 
@@ -529,7 +649,6 @@
       });
     }
 
-    // Lee únicamente las fotos reales ingresadas en la celda 'imagen' (separadas por coma si hay varias)
     function parsePhotos(imagenStr) {
       return (imagenStr || '')
         .split(',')
@@ -541,8 +660,8 @@
       const estado = (p.estado_stock || 'disponible').toLowerCase().trim();
       const esVendido = estado === 'vendido';
       const badgeStyle = esVendido
-        ? 'bg-slate-200 text-slate-600'
-        : (estado === 'ultimas' ? 'bg-amber-400 text-brand-carbon' : 'bg-brand-emerald text-brand-carbon');
+        ? 'bg-slate-300 text-slate-700'
+        : (estado === 'ultimas' ? 'bg-brand-ruby text-white' : 'bg-brand-emerald text-brand-carbon');
 
       const fotos = parsePhotos(p.imagen);
       const tieneFoto = fotos.length > 0;
@@ -550,32 +669,32 @@
       const mensajeWA = encodeURIComponent(`Hola REMASTER TEC! Me interesa el *${p.titulo}* (Ref: ${p.id || '-'}) de ${p.precio_remate || ''}. ¿Sigue disponible?`);
 
       return `
-        <article onclick="openProductModal('${encodedItem}')" class="remaster-card rounded-2xl overflow-hidden flex flex-col justify-between cursor-pointer group ${esVendido ? 'opacity-60 grayscale-[35%]' : ''}">
+        <article onclick="openProductModal('${encodedItem}')" class="framework-card rounded-2xl overflow-hidden flex flex-col justify-between cursor-pointer group ${esVendido ? 'opacity-60 grayscale-[35%]' : ''}">
           <div>
-            <div class="relative h-48 bg-slate-900 overflow-hidden flex items-center justify-center">
+            <div class="relative h-48 bg-slate-900 overflow-hidden flex items-center justify-center border-b border-slate-200">
               ${tieneFoto
                 ? `<img src="${fotos[0]}" alt="${p.titulo}" class="w-full h-full object-cover transition duration-500 group-hover:scale-105">`
-                : `<div class="text-center p-4 font-mono text-xs text-slate-400">REMASTER TEC<br><span class="text-[10px] text-slate-500">Sin imagen asignada</span></div>`
+                : `<div class="text-center p-4 font-mono text-xs text-slate-400">REMASTER TEC<br><span class="text-[10px] text-slate-500">Ver ficha técnica</span></div>`
               }
-              <span class="absolute top-2.5 left-2.5 ${badgeStyle} font-mono text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase shadow-sm">
+              <span class="absolute top-2.5 left-2.5 ${badgeStyle} font-mono text-[10px] font-bold px-2.5 py-0.5 rounded uppercase shadow-sm">
                 ${p.stock_texto || 'Disponible'}
               </span>
               ${fotos.length > 1
-                ? `<span class="absolute top-2.5 right-2.5 bg-brand-carbon/85 text-white font-mono text-[10px] px-2 py-0.5 rounded-lg">
+                ? `<span class="absolute top-2.5 right-2.5 bg-brand-carbon/85 text-white font-mono text-[10px] px-2 py-0.5 rounded border border-slate-700">
                      📷 ${fotos.length} fotos
                    </span>`
                 : ''
               }
-              <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-carbon/90 via-brand-carbon/40 to-transparent p-2.5 flex items-center justify-between">
-                <span class="font-mono text-[10px] text-brand-mint">✓ ${p.grado_estetico || 'Verificado'}</span>
-                <span class="font-mono text-[10px] text-white bg-brand-emerald/20 border border-brand-emerald/40 px-2 py-0.5 rounded group-hover:bg-brand-emerald group-hover:text-brand-carbon transition font-bold">
-                  🔍 Ampliar
+              <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-carbon/95 via-brand-carbon/50 to-transparent p-2.5 flex items-center justify-between">
+                <span class="font-mono text-[10px] text-brand-mint font-semibold">✓ ${p.grado_estetico || 'Verificado'}</span>
+                <span class="font-mono text-[10px] text-white bg-brand-emerald/25 border border-brand-emerald/60 px-2.5 py-0.5 rounded group-hover:bg-brand-emerald group-hover:text-brand-carbon transition font-bold">
+                  ⚡ Emerger Ficha
                 </span>
               </div>
             </div>
 
             <div class="p-4">
-              <div class="flex items-center justify-between text-[11px] font-mono text-slate-400 mb-1">
+              <div class="flex items-center justify-between text-[11px] font-mono text-slate-500 mb-1">
                 <span>REF: ${p.id || '-'}</span>
                 <span class="text-emerald-700 font-semibold">🌱 Eco-Tech</span>
               </div>
@@ -603,15 +722,15 @@
           </div>
 
           <div class="px-4 pb-4 pt-1 flex gap-2" onclick="event.stopPropagation()">
-            <button onclick="openProductModal('${encodedItem}')" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-brand-carbon font-display font-bold py-2.5 rounded-xl text-xs transition">
-              📷 Detalle
+            <button onclick="openProductModal('${encodedItem}')" class="w-1/2 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-brand-carbon font-display font-bold py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-1">
+              <span>🔍</span> Características
             </button>
             ${esVendido
-              ? `<button disabled class="w-2/3 bg-slate-200 text-slate-500 font-display font-bold py-2.5 rounded-xl text-xs cursor-not-allowed">
+              ? `<button disabled class="w-1/2 bg-slate-200 text-slate-500 font-display font-bold py-2.5 rounded-xl text-xs cursor-not-allowed">
                    Agotado
                  </button>`
               : `<a href="https://wa.me/${WHATSAPP_NUMBER}?text=${mensajeWA}" target="_blank"
-                    class="w-2/3 bg-brand-carbon hover:bg-brand-emerald text-white hover:text-brand-carbon font-display font-bold py-2.5 rounded-xl text-xs text-center transition">
+                    class="w-1/2 bg-brand-carbon hover:bg-brand-emerald text-white hover:text-brand-carbon font-display font-bold py-2.5 rounded-xl text-xs text-center transition">
                    💬 WhatsApp
                  </a>`
             }
@@ -620,7 +739,6 @@
       `;
     }
 
-    // Renderiza pestaña de Equipos
     function renderProducts(filtro = 'todos', searchQuery = '') {
       filtroActualEquipos = filtro;
       const grid = document.getElementById('product-grid');
@@ -646,7 +764,7 @@
 
       if (lista.length === 0) {
         grid.innerHTML = `
-          <div class="col-span-full bg-white rounded-2xl border border-slate-200 p-10 text-center text-slate-500 text-sm">
+          <div class="col-span-full bg-white rounded-2xl border border-slate-300 p-10 text-center text-slate-500 text-sm">
             Actualmente no hay equipos cargados en esta categoría en la hoja de datos, o estamos actualizando el nuevo lote. Escríbenos por WhatsApp al +57 302 773 0460.
           </div>`;
         return;
@@ -674,7 +792,6 @@
       }
     }
 
-    // Renderiza pestaña de Accesorios exclusivamente desde Google Sheets
     function renderAccesorios(subfiltro = 'todos') {
       const grid = document.getElementById('accesorios-grid');
       grid.innerHTML = '';
@@ -694,8 +811,8 @@
 
       if (filtrados.length === 0) {
         grid.innerHTML = `
-          <div class="col-span-full bg-white rounded-2xl border border-slate-200 p-10 text-center text-slate-500 text-sm">
-            Todavía no hay accesorios cargados en esta categoría dentro de tu hoja de Google Sheets. (Para agregarlos, añade una fila en tu Google Sheets con la categoría: <strong>refrigeracion</strong>, <strong>usb</strong> o <strong>microsd</strong>).
+          <div class="col-span-full bg-white rounded-2xl border border-slate-300 p-10 text-center text-slate-500 text-sm">
+            Todavía no hay accesorios cargados en esta categoría dentro de tu hoja de Google Sheets. (Usa las categorías: <strong>refrigeracion</strong>, <strong>usb</strong> o <strong>microsd</strong>).
           </div>`;
         return;
       }
@@ -748,7 +865,6 @@
       }
     }
 
-    // Visor Emergente de Fotos Reales
     function openProductModal(encodedItem) {
       const p = JSON.parse(decodeURIComponent(encodedItem));
       modalPhotos = parsePhotos(p.imagen);
@@ -757,19 +873,46 @@
       document.getElementById('modal-title').innerText = p.titulo || '';
       document.getElementById('modal-ref').innerText = `REF: ${p.id || '-'}`;
       document.getElementById('modal-badge').innerText = p.stock_texto || 'Disponible';
-      document.getElementById('modal-grade').innerText = p.grado_estetico || 'Verificado';
+      document.getElementById('modal-grade').innerText = p.grado_estetico || 'Grado A';
       document.getElementById('modal-price').innerText = p.precio_remate || '';
       document.getElementById('modal-old-price').innerText = p.precio_referencia || '';
 
-      const specsList = (p.specs || '').split('|').map(s => s.trim()).filter(Boolean);
-      document.getElementById('modal-specs').innerHTML = specsList.map(s => `
-        <li class="flex items-start gap-2">
-          <span class="text-brand-emerald font-bold">✓</span>
-          <span>${s}</span>
-        </li>
-      `).join('');
+      const numRemate = parseInt((p.precio_remate || '').replace(/\D/g, ''), 10);
+      const numRef = parseInt((p.precio_referencia || '').replace(/\D/g, ''), 10);
+      const discountPill = document.getElementById('modal-discount-pill');
+      if (numRemate && numRef && numRef > numRemate) {
+        const pct = Math.round(((numRef - numRemate) / numRef) * 100);
+        discountPill.innerText = `AHORRAS ${pct}%`;
+        discountPill.classList.remove('hidden');
+      } else {
+        discountPill.classList.add('hidden');
+      }
 
-      const msg = encodeURIComponent(`Hola REMASTER TEC! Vi en el catálogo el *${p.titulo}* (Ref: ${p.id || '-'}) en ${p.precio_remate || ''}. Quiero apartarlo o recibir más información.`);
+      const specsList = (p.specs || '').split('|').map(s => s.trim()).filter(Boolean);
+      const specsContainer = document.getElementById('modal-specs');
+
+      if (specsList.length > 0) {
+        specsContainer.innerHTML = specsList.map((s, index) => {
+          const num = String(index + 1).padStart(2, '0');
+          const delayMs = index * 70;
+          return `
+            <div style="animation-delay: ${delayMs}ms" class="spec-item-emerge bg-slate-950/90 hover:bg-slate-800/90 border border-slate-800 hover:border-brand-emerald/60 p-3 rounded-xl flex items-start gap-3 transition">
+              <span class="font-mono text-[11px] font-bold bg-emerald-950 text-brand-emerald border border-emerald-500/30 px-2 py-0.5 rounded shrink-0 mt-0.5">
+                ${num}
+              </span>
+              <span class="text-xs sm:text-sm text-slate-200 font-medium leading-snug">${s}</span>
+            </div>
+          `;
+        }).join('');
+      } else {
+        specsContainer.innerHTML = `
+          <div class="bg-slate-950 border border-slate-800 p-3.5 rounded-xl text-xs text-slate-400">
+            Equipo verificado bajo estándar REMASTER TEC Grado A. Solicita el video de funcionamiento en vivo por WhatsApp.
+          </div>
+        `;
+      }
+
+      const msg = encodeURIComponent(`Hola REMASTER TEC! Vi la ficha técnica del *${p.titulo}* (Ref: ${p.id || '-'}) en ${p.precio_remate || ''}. Quiero apartarlo o ver video de funcionamiento.`);
       document.getElementById('modal-wa-btn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
 
       updateModalGalleryView();
@@ -859,6 +1002,73 @@
     function sendServiceWA(nombrePlan) {
       const msg = encodeURIComponent(`Hola REMASTER TEC! Me interesa el servicio de *${nombrePlan}* para repotenciar mi computador. ¿Me ayudan con la cotización?`);
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
+    }
+
+    function downloadLogoPNG(version) {
+      const svgHorizontal = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 120" width="1080" height="240">
+        <defs>
+          <linearGradient id="g1" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#0B0F17"/><stop offset="45%" stop-color="#334155"/><stop offset="75%" stop-color="#059669"/><stop offset="100%" stop-color="#10B981"/>
+          </linearGradient>
+          <linearGradient id="g2" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#475569"/><stop offset="50%" stop-color="#94A3B8"/><stop offset="100%" stop-color="#34D399"/>
+          </linearGradient>
+        </defs>
+        <rect width="540" height="120" rx="20" fill="#0B0F17"/>
+        <g transform="translate(14, 10)">
+          <rect x="0" y="0" width="100" height="100" rx="22" fill="url(#g1)" stroke="url(#g2)" stroke-width="3"/>
+          <path d="M32 34 L48 18 L66 34" fill="none" stroke="#ECFDF5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M74 46 L82 64 L60 78" fill="none" stroke="#ECFDF5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M44 78 L20 66 L26 46" fill="none" stroke="#CBD5E1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="36" y="36" width="28" height="28" rx="6" fill="#0F172A" stroke="#CBD5E1" stroke-width="2.5"/>
+          <path d="M41 50 H45 L48 43 L52 57 L55 50 H59" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <text x="132" y="68" font-family="Arial, sans-serif" font-weight="800" font-size="42" fill="#F8FAFC">
+          REMASTER T<tspan font-family="Georgia, serif" font-style="italic" font-weight="900" font-size="46" fill="#10B981">E</tspan><tspan font-family="Georgia, serif" font-style="italic" font-weight="900" font-size="46" fill="#E11D48">C</tspan>
+        </text>
+        <text x="134" y="96" font-family="monospace" font-weight="600" font-size="12" fill="#94A3B8" letter-spacing="3">HARDWARE GRADO A • BOGOTÁ</text>
+      </svg>`;
+
+      const svgVertical = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 260" width="720" height="520">
+        <defs>
+          <linearGradient id="gv1" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#0B0F17"/><stop offset="45%" stop-color="#334155"/><stop offset="75%" stop-color="#059669"/><stop offset="100%" stop-color="#10B981"/>
+          </linearGradient>
+        </defs>
+        <rect width="360" height="260" rx="24" fill="#0B0F17"/>
+        <g transform="translate(125, 22) scale(1.1)">
+          <rect x="0" y="0" width="100" height="100" rx="22" fill="url(#gv1)" stroke="#94A3B8" stroke-width="3"/>
+          <path d="M32 34 L48 18 L66 34" fill="none" stroke="#ECFDF5" stroke-width="4" stroke-linecap="round"/>
+          <path d="M74 46 L82 64 L60 78" fill="none" stroke="#ECFDF5" stroke-width="4" stroke-linecap="round"/>
+          <path d="M44 78 L20 66 L26 46" fill="none" stroke="#CBD5E1" stroke-width="4" stroke-linecap="round"/>
+          <rect x="36" y="36" width="28" height="28" rx="6" fill="#0F172A" stroke="#CBD5E1" stroke-width="2.5"/>
+          <path d="M41 50 H45 L48 43 L52 57 L55 50 H59" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round"/>
+        </g>
+        <text x="180" y="192" text-anchor="middle" font-family="Arial, sans-serif" font-weight="800" font-size="33" fill="#F8FAFC">
+          REMASTER T<tspan font-family="Georgia, serif" font-style="italic" font-weight="900" font-size="37" fill="#10B981">E</tspan><tspan font-family="Georgia, serif" font-style="italic" font-weight="900" font-size="37" fill="#E11D48">C</tspan>
+        </text>
+        <text x="180" y="225" text-anchor="middle" font-family="monospace" font-weight="600" font-size="11" fill="#94A3B8" letter-spacing="2.5">TECNOLOGÍA CIRCULAR GRADO A</text>
+      </svg>`;
+
+      const svgData = version === 'vertical' ? svgVertical : svgHorizontal;
+      const canvas = document.getElementById('logo-export-canvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(svgBlob);
+
+      img.onload = function() {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0);
+        URL.revokeObjectURL(url);
+        const a = document.createElement('a');
+        a.download = `REMASTER-TEC-logo-${version}.png`;
+        a.href = canvas.toDataURL('image/png');
+        a.click();
+      };
+      img.src = url;
     }
 
     cargarInventario();
